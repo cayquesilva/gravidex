@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Criar as surpresas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./criar.css">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script type="module" src="../js/criar.js"></script>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="topo">
+    <div class="eyebrow">só para os papais</div>
+    <h1>Criar as surpresas</h1>
+    <p>Escolha como o lacre vai ser rompido, coloque quem vai receber e imprima os cartões com QR.</p>
+  </header>
+
+  <section class="sec">
+    <div class="passo"><span>1</span><h2>Endereço do site publicado</h2></div>
+    <input id="base" class="campo base" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://seu-site.netlify.app/">
+    <div id="base-aviso" class="aviso erro" hidden>O endereço precisa começar com https:// para os QR funcionarem nos celulares.</div>
+    <button id="base-reset" type="button" class="link-btn">usar o endereço desta página</button>
+  </section>
+
+  <section class="sec">
+    <div class="passo"><span>2</span><h2>Como romper o lacre</h2></div>
+    <div id="mecs" class="mecs" role="radiogroup" aria-label="Como romper o lacre"></div>
+    <label class="check"><input id="por-pessoa" type="checkbox">Mecânica diferente para cada pessoa</label>
+  </section>
+
+  <section class="sec">
+    <div class="passo"><span>3</span><h2>Quem vai receber</h2></div>
+    <div id="pessoas" class="pessoas"></div>
+    <button id="add" type="button" class="add">+ adicionar pessoa</button>
+    <div id="dup-aviso" class="aviso alerta" hidden>Tem nomes repetidos com o mesmo papel. Confira se é isso mesmo.</div>
+    <div id="vazio-aviso" class="aviso erro" hidden>Adicione pelo menos uma pessoa.</div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-topo">
+      <div class="passo"><span>4</span><h2>Cartões</h2></div>
+      <button id="imprimir" type="button" class="primario">Imprimir todos (A4)</button>
+    </div>
+    <div class="nota">A cor do cartão indica o papel, e só vocês sabem qual é qual. Nada no cartão revela a surpresa.</div>
+    <div id="cartoes" class="cartoes"></div>
+  </section>
+
+</main>
+</body>
+</html>
