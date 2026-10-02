@@ -53,7 +53,7 @@ export const montar: Montar = (ctx) => {
     }
     for (const el of [metE, metD, estrela, svg] as (HTMLElement | SVGElement)[]) el.style.opacity = '0';
     selo.disabled = true;
-    ctx.abrir();
+    ctx.abrir({ el: carta, modo: 'crescer' });
   };
 
   selo.addEventListener('click', () => {

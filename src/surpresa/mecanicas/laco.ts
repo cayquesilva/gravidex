@@ -36,7 +36,6 @@ export const montar: Montar = (ctx) => {
     for (const f of g.fitas) f.style.transform = 'scaleY(0)';
     g.anelE.style.opacity = g.anelD.style.opacity = '0';
     g.abrir('translate(40px,-320px) rotate(35deg)');
-    ctx.abrir();
   };
 
   let x0 = 0;

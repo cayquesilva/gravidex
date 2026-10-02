@@ -1,7 +1,7 @@
 import '../styles/base.css';
 import '../styles/criar.css';
 import {
-  PAPEIS, MECANICAS, PADRAO, NOME_MAX, ehPapel, ehMecanica, dicaDe,
+  PAPEIS, MECANICAS, PADRAO, NOME_MAX, FRENTES, RECADO_MAX, FOTO, ehPapel, ehMecanica, dicaDe,
   type Papel, type Mecanica,
 } from '../shared/config';
 import { h } from '../shared/dom';
@@ -9,7 +9,13 @@ import { qrPng, qrSvg } from '../shared/qr';
 import { montarLink } from '../shared/url';
 import { imprimir } from './print';
 
-interface Pessoa { id: string; nome: string; papel: Papel; mecanica: Mecanica | null }
+interface Pessoa {
+  id: string; nome: string; papel: Papel; mecanica: Mecanica | null;
+  /** índice em FRENTES (capa da cartinha) */
+  frente: number;
+  /** recado escrito pelos pais (opcional) */
+  recado: string;
+}
 interface Estado { base: string; mecanica: Mecanica; porPessoa: boolean; pessoas: Pessoa[] }
 
 const KEY = 'surpresa.estado';
@@ -20,7 +26,8 @@ const basePadrao = () => {
   try { return new URL('../', location.href).href; } catch { return 'https://exemplo.com/'; }
 };
 const uid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2));
-const novaPessoa = (papel: Papel): Pessoa => ({ id: uid(), nome: '', papel, mecanica: null });
+const novaPessoa = (papel: Papel): Pessoa => ({ id: uid(), nome: '', papel, mecanica: null, frente: PADRAO.frente, recado: '' });
+const ehFrente = (v: unknown): v is number => typeof v === 'number' && Number.isInteger(v) && v >= 0 && v < FRENTES.length;
 
 // ---------- Estado ----------
 
@@ -34,8 +41,12 @@ function carregar(): Estado {
   let salvo: Record<string, unknown> | null = null;
   try { salvo = JSON.parse(localStorage.getItem(KEY) ?? 'null'); } catch { /* estado corrompido */ }
   if (!salvo || typeof salvo !== 'object') return padrao;
+  let base = typeof salvo.base === 'string' ? salvo.base : padrao.base;
+  if (import.meta.env.DEV && (base.startsWith('https://localhost') || base.startsWith('https://127.0.0.1'))) {
+    base = base.replace('https://', 'http://');
+  }
   return {
-    base: typeof salvo.base === 'string' ? salvo.base : padrao.base,
+    base,
     mecanica: ehMecanica(salvo.mecanica) ? salvo.mecanica : padrao.mecanica,
     porPessoa: !!salvo.porPessoa,
     pessoas: Array.isArray(salvo.pessoas)
@@ -44,6 +55,8 @@ function carregar(): Estado {
           nome: String(p?.nome ?? '').slice(0, NOME_MAX),
           papel: ehPapel(p?.papel) ? p.papel : PADRAO.papel,
           mecanica: ehMecanica(p?.mecanica) ? p.mecanica : null,
+          frente: ehFrente(p?.frente) ? p.frente : PADRAO.frente,
+          recado: String(p?.recado ?? '').slice(0, RECADO_MAX),
         }))
       : padrao.pessoas,
   };
@@ -58,10 +71,19 @@ function salvar() {
 }
 
 const baseOk = () => {
-  try { return new URL(estado.base).protocol === 'https:'; } catch { return false; }
+  try {
+    const url = new URL(estado.base);
+    if (url.protocol === 'https:') return true;
+    if (import.meta.env.DEV && url.protocol === 'http:') return true;
+    return false;
+  } catch {
+    return false;
+  }
 };
 const mecDe = (p: Pessoa): Mecanica => (estado.porPessoa && p.mecanica ? p.mecanica : estado.mecanica);
-const linkDe = (p: Pessoa) => montarLink(estado.base, { papel: p.papel, nome: p.nome, mecanica: mecDe(p) });
+const linkDe = (p: Pessoa) => montarLink(estado.base, {
+  papel: p.papel, nome: p.nome, mecanica: mecDe(p), frente: p.frente, recado: p.recado,
+});
 const podeAgir = () => baseOk() && estado.pessoas.length > 0;
 
 function nomeArquivo(p: Pessoa) {
@@ -211,8 +233,50 @@ function renderPessoas() {
           mudou();
         },
       }, '×'),
+      campoFrente(p, i),
     );
   }));
+}
+
+/** Capa da cartinha (um texto pronto, com prévia) e o recado opcional de vocês, que vem antes da promoção. */
+function campoFrente(p: Pessoa, i: number) {
+  const previa = h('p', { className: 'frente-previa' });
+  const contador = h('span', { className: 'frente-contador' });
+  const render = () => {
+    previa.textContent = `“${FRENTES[p.frente].texto}”`;
+    contador.textContent = `${p.recado.length}/${RECADO_MAX}`;
+  };
+  const select = h('select', {
+    className: 'campo', 'aria-label': `Capa da cartinha da pessoa ${i + 1}`,
+    onchange: () => { atualizar(p.id, { frente: Number(select.value) }); render(); },
+  }, ...opcoes(FRENTES.map((f, k) => [String(k), f.label]), String(p.frente)));
+  const recado = h('textarea', {
+    className: 'campo frente-texto', value: p.recado, maxLength: RECADO_MAX, rows: 2,
+    placeholder: 'Opcional: aparece ao virar a capa, antes da promoção',
+    'aria-label': `Recado de vocês para a pessoa ${i + 1}`,
+    oninput: () => { atualizar(p.id, { recado: recado.value.slice(0, RECADO_MAX) }); render(); },
+  });
+  render();
+  return h('div', { className: 'frente-cfg' },
+    h('span', { className: 'frente-rotulo' }, 'Capa'), select, previa,
+    h('div', { className: 'frente-escrito' },
+      h('span', { className: 'frente-rotulo' }, 'Recado de vocês'), recado, contador),
+  );
+}
+
+/** Mostra se a foto do verso existe no site (public/foto.jpg). */
+function conferirFoto() {
+  const img = $<HTMLImageElement>('#foto-img');
+  const status = $('#foto-status');
+  img.onload = () => {
+    $('#foto-cfg').classList.add('tem-foto');
+    status.textContent = 'Foto encontrada! Ela aparece no verso de todas as cartinhas.';
+  };
+  img.onerror = () => {
+    $('#foto-cfg').classList.remove('tem-foto');
+    status.textContent = 'Ainda sem foto. Sem ela, o verso aparece sem o porta-retrato.';
+  };
+  img.src = new URL(`../${FOTO}`, location.href).href;
 }
 
 function renderAvisos() {
@@ -262,7 +326,12 @@ function renderCartoes() {
 const baseInput = $<HTMLInputElement>('#base');
 baseInput.value = estado.base;
 baseInput.addEventListener('input', () => {
-  estado.base = baseInput.value.trim();
+  let val = baseInput.value.trim();
+  if (import.meta.env.DEV && (val.startsWith('https://localhost') || val.startsWith('https://127.0.0.1'))) {
+    val = val.replace('https://', 'http://');
+    baseInput.value = val;
+  }
+  estado.base = val;
   mudou();
 });
 $('#base-reset').addEventListener('click', () => {
@@ -288,6 +357,7 @@ $('#add').addEventListener('click', () => {
 $('#imprimir').addEventListener('click', imprimirTodos);
 
 montarMecs();
+conferirFoto();
 renderPessoas();
 renderBase();
 renderAvisos();

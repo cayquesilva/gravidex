@@ -21,11 +21,15 @@ export function criarPresente(ctx: Ctx, marginTop: number) {
   return {
     area, brilho, corpo, tampa, anelE, anelD,
     fitas: [fitaCorpo, fitaTampa],
-    /** A tampa voa para `voo`; o corpo faz fade e encolhe (só fade com movimento reduzido). */
+    /**
+     * A tampa voa para `voo`, a cartinha sai de dentro da caixa e depois o corpo faz fade
+     * e encolhe (só fade com movimento reduzido).
+     */
     abrir(voo: string) {
       tampa.style.transition = ctx.reduz ? 'opacity .5s ease' : VOO;
       if (!ctx.reduz) tampa.style.transform = voo;
       area.classList.add('aberto');
+      ctx.abrir({ el: corpo, modo: 'dentro' });
     },
   };
 }

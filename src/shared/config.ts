@@ -1,9 +1,26 @@
 export const PAPEIS = {
-  'vovo-a': { titulo: 'Vovó', verbo: 'promovida', cartao: 'oklch(0.88 0.06 10)' },
-  'vovo-o': { titulo: 'Vovô', verbo: 'promovido', cartao: 'oklch(0.88 0.06 230)' },
-  'titia': { titulo: 'Titia', verbo: 'promovida', cartao: 'oklch(0.91 0.06 85)' },
-  'titio': { titulo: 'Titio', verbo: 'promovido', cartao: 'oklch(0.88 0.06 160)' },
+  'vovo-a': { titulo: 'Vovó', verbo: 'promovida', querido: 'Querida', cartao: 'oklch(0.88 0.06 10)' },
+  'vovo-o': { titulo: 'Vovô', verbo: 'promovido', querido: 'Querido', cartao: 'oklch(0.88 0.06 230)' },
+  'titia': { titulo: 'Titia', verbo: 'promovida', querido: 'Querida', cartao: 'oklch(0.91 0.06 85)' },
+  'titio': { titulo: 'Titio', verbo: 'promovido', querido: 'Querido', cartao: 'oklch(0.88 0.06 160)' },
 } as const;
+
+/**
+ * Textos prontos para a capa da cartinha (depois vêm o recado dos pais, se houver, e a promoção).
+ * A ordem importa: o índice vai no link (`f`). Só acrescente no fim.
+ */
+export const FRENTES = [
+  { label: 'Novidade guardada', texto: 'Temos uma novidade guardada com muito carinho, e você é uma das primeiras pessoas que precisava saber.' },
+  { label: 'Novo capítulo', texto: 'A nossa família está prestes a ganhar um novo capítulo, e você vai ter um papel muito especial nele.' },
+  { label: 'Melhores histórias', texto: 'Você faz parte das melhores histórias da nossa vida. E a próxima está só começando…' },
+  { label: 'Amor de sempre', texto: 'Obrigado por todo o amor de sempre. Logo, logo ele vai ter mais alguém para receber.' },
+  { label: 'Respira fundo', texto: 'Respira fundo e vira o cartão: o que está do outro lado vai mudar o seu título para sempre.' },
+] as const;
+/** limite do recado escrito pelos pais */
+export const RECADO_MAX = 180;
+
+/** Foto do casal no verso da cartinha: coloque o arquivo em `public/` com este nome. Se não existir, o porta-retrato some. */
+export const FOTO = 'foto.jpg';
 
 export const MECANICAS = {
   segurar: {
@@ -39,8 +56,8 @@ export const MECANICAS = {
 export type Papel = keyof typeof PAPEIS;
 export type Mecanica = keyof typeof MECANICAS;
 
-export const PADRAO = { papel: 'vovo-a', mecanica: 'laco', toques: 5 } as const satisfies {
-  papel: Papel; mecanica: Mecanica; toques: number;
+export const PADRAO = { papel: 'vovo-a', mecanica: 'laco', toques: 5, frente: 0 } as const satisfies {
+  papel: Papel; mecanica: Mecanica; toques: number; frente: number;
 };
 export const NOME_MAX = 24;
 export const TOQUES_MIN = 1;

@@ -26,8 +26,10 @@ test('4 pessoas → 4 QR distintos, estado sobrevive ao reload, impressão 2×2'
   await page.locator('.mec[data-mec="envelope"]').click();
   await page.locator('#por-pessoa').check();
   await page.locator('.pessoa').nth(1).locator('select').nth(1).selectOption('raspar');
+  await page.locator('.pessoa').nth(2).locator('textarea').fill('Ana, senta que lá vem notícia!');
 
   await page.reload();
+  await expect(page.locator('.pessoa').nth(2).locator('textarea')).toHaveValue('Ana, senta que lá vem notícia!');
   await expect(page.locator('#base')).toHaveValue('https://surpresa.netlify.app/');
   await expect(page.locator('.pessoa .nome').nth(0)).toHaveValue('Conceição');
   await expect(page.locator('.mec[data-mec="envelope"]')).toHaveAttribute('aria-checked', 'true');
@@ -56,4 +58,30 @@ test('4 pessoas → 4 QR distintos, estado sobrevive ao reload, impressão 2×2'
   for (let i = 0; i < 5; i++) await page.locator('.remover').first().click();
   await expect(page.locator('#vazio-aviso')).toBeVisible();
   await expect(page.locator('#imprimir')).toBeDisabled();
+});
+
+test('cartinha: capa pronta vai como índice e o recado vai por extenso', async ({ page }) => {
+  await page.addInitScript(() => {
+    const w = window as unknown as { abertos: string[]; open: (u: string) => null };
+    w.abertos = [];
+    w.open = (u: string) => { w.abertos.push(u); return null; };
+  });
+  await page.goto('./criar/');
+  await page.locator('#base').fill('https://surpresa.netlify.app/');
+  const p0 = page.locator('.pessoa').nth(0);
+  await p0.locator('select').last().selectOption('3');
+  await expect(p0.locator('.frente-previa')).toContainText('amor de sempre');
+  const p1 = page.locator('.pessoa').nth(1);
+  await p1.locator('textarea').fill('Zé, senta que lá vem notícia!');
+  await expect(p1.locator('.frente-contador')).toHaveText('29/180');
+
+  await page.locator('.cartao-acoes').nth(0).getByText('Abrir ↗').click();
+  await page.locator('.cartao-acoes').nth(1).getByText('Abrir ↗').click();
+  const abertos = await page.evaluate(() => (window as unknown as { abertos: string[] }).abertos);
+  expect(new URL(abertos[0]).searchParams.get('f')).toBe('3');
+  expect(new URL(abertos[0]).searchParams.has('x')).toBe(false);
+  expect(new URL(abertos[1]).searchParams.has('f')).toBe(false);
+  expect(new URL(abertos[1]).searchParams.get('x')).toBe('Zé, senta que lá vem notícia!');
+  // depende de existir public/foto.jpg
+  await expect(page.locator('#foto-status')).toHaveText(/Foto encontrada|Ainda sem foto/);
 });

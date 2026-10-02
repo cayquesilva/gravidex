@@ -1,6 +1,6 @@
-import { PAPEIS } from '../../shared/config';
 import { h } from '../../shared/dom';
-import { textoPromocao } from '../../shared/url';
+import type { Parametros } from '../../shared/url';
+import { criarCartinha, type OpcoesCartinha } from '../cartinha';
 import { fatorLayout, teclaAvanca } from '../gesto';
 import type { Montar } from '../tipos';
 
@@ -8,17 +8,19 @@ const PINCEL = 46;
 const AMOSTRA = 16;
 const LIMIAR = 0.5;
 
+/** Cartão já raspado e virado (recarga depois de aberto). */
+export function cartaoRaspado(P: Parametros, o: Omit<OpcoesCartinha, 'noFim'>) {
+  const carta = criarCartinha(P, { ...o, noFim: true });
+  const card = h('div', { className: 'raspa-card raspado' }, carta.el);
+  queueMicrotask(() => carta.ativar());
+  return card;
+}
+
 export const montar: Montar = (ctx) => {
-  const { papel, nome } = ctx.P;
+  // A cartinha (frente e verso) fica por baixo da película; só vira depois de raspada.
+  const carta = criarCartinha(ctx.P, { reduz: ctx.reduz, anunciar: ctx.anunciar });
   const canvas = h('canvas', { className: 'raspa-canvas', tabIndex: 0, role: 'button', 'aria-label': 'Raspar o cartão' });
-  // O conteúdo por baixo fica escondido de leitores de tela até a revelação.
-  const card = h('div', { className: 'raspa-card' },
-    h('div', { className: 'raspa-fundo', 'aria-hidden': 'true' },
-      h('div', { className: 'raspa-pre' }, textoPromocao(papel, nome)),
-      h('div', { className: 'raspa-titulo' }, PAPEIS[papel].titulo),
-    ),
-    canvas,
-  );
+  const card = h('div', { className: 'raspa-card' }, carta.el, canvas);
   ctx.palco.append(card);
 
   const c2d = canvas.getContext('2d', { willReadFrequently: true })!;
@@ -96,7 +98,10 @@ export const montar: Montar = (ctx) => {
     if (pronto || raspado() <= LIMIAR) return;
     pronto = true;
     desenhando = false;
-    setTimeout(() => ctx.abrir(), 500);
+    // o cartão fica: a película some, ele sobe um pouco e passa a poder virar
+    card.classList.add('raspado');
+    canvas.inert = true;
+    ctx.abrir({ modo: 'no-lugar', carta });
   };
 
   canvas.addEventListener('pointerdown', (e) => {
@@ -134,5 +139,6 @@ export const montar: Montar = (ctx) => {
 
   requestAnimationFrame(pintar);
   document.fonts?.ready.then(() => { if (!riscou) pintar(); });
-  addEventListener('resize', () => { if (!riscou) pintar(); });
+  // repinta se o cartão mudar de tamanho antes do primeiro risco (fonte, foto que não carregou, giro da tela)
+  new ResizeObserver(() => { if (!riscou) pintar(); }).observe(card);
 };

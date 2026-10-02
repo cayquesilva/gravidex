@@ -26,7 +26,6 @@ export const montar: Montar = (ctx) => {
   const abrir = () => {
     g.brilho.style.opacity = '0';
     g.abrir('translate(-30px,-420px) rotate(-30deg)');
-    ctx.abrir();
   };
 
   let y0 = 0;

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { PADRAO } from '../src/shared/config';
-import { lerParametros, montarLink, textoPromocao } from '../src/shared/url';
+import { FRENTES, RECADO_MAX, PADRAO } from '../src/shared/config';
+import { lerParametros, montarLink, textoParabens, textoPromocao, textoSaudacao } from '../src/shared/url';
 
 const BASE = 'https://surpresa.netlify.app/';
 const busca = (link: string) => new URL(link).search;
@@ -8,7 +8,7 @@ const busca = (link: string) => new URL(link).search;
 describe('montarLink / lerParametros', () => {
   it.each(['Conceição', 'João Pedro', 'Zé & Cia ?#=/', 'Ñandú 👶'])('ida e volta com "%s"', (nome) => {
     const link = montarLink(BASE, { papel: 'vovo-o', nome, mecanica: 'raspar' });
-    expect(lerParametros(busca(link))).toEqual({ papel: 'vovo-o', nome, mecanica: 'raspar', toques: 5 });
+    expect(lerParametros(busca(link))).toEqual({ papel: 'vovo-o', nome, mecanica: 'raspar', toques: 5, frente: FRENTES[0].texto, recado: '' });
   });
 
   it('nunca escreve o papel por extenso', () => {
@@ -34,8 +34,8 @@ describe('montarLink / lerParametros', () => {
   });
 
   it('parâmetros inválidos caem no padrão', () => {
-    expect(lerParametros('?p=bisavo&m=explodir')).toEqual({ papel: 'vovo-a', nome: '', mecanica: 'laco', toques: 5 });
-    expect(lerParametros('')).toEqual({ ...PADRAO, nome: '' });
+    expect(lerParametros('?p=bisavo&m=explodir')).toEqual({ papel: 'vovo-a', nome: '', mecanica: 'laco', toques: 5, frente: FRENTES[0].texto, recado: '' });
+    expect(lerParametros('')).toEqual({ ...PADRAO, nome: '', frente: FRENTES[0].texto, recado: '' });
     expect(lerParametros('?p=__proto__&m=toString').papel).toBe('vovo-a');
     expect(lerParametros('?p=__proto__&m=toString').mecanica).toBe('laco');
   });
@@ -56,17 +56,58 @@ describe('montarLink / lerParametros', () => {
   });
 });
 
-describe('textoPromocao', () => {
-  it('usa o gênero do papel', () => {
-    expect(textoPromocao('vovo-a', 'Maria')).toBe('Maria, você foi promovida a');
-    expect(textoPromocao('vovo-o', 'José')).toBe('José, você foi promovido a');
-    expect(textoPromocao('titia', 'Ana')).toBe('Ana, você foi promovida a');
-    expect(textoPromocao('titio', 'Beto')).toBe('Beto, você foi promovido a');
+describe('textos da cartinha', () => {
+  it('promoção usa o gênero do papel', () => {
+    expect(textoPromocao('vovo-a')).toBe('Você foi promovida a');
+    expect(textoPromocao('vovo-o')).toBe('Você foi promovido a');
+    expect(textoPromocao('titia')).toBe('Você foi promovida a');
+    expect(textoPromocao('titio')).toBe('Você foi promovido a');
   });
 
-  it('funciona sem nome', () => {
-    expect(textoPromocao('titia')).toBe('Você foi promovida a');
-    expect(textoPromocao('vovo-o', '')).toBe('Você foi promovido a');
-    expect(textoPromocao('titio', '   ')).toBe('Você foi promovido a');
+  it('saudação da frente usa o gênero e some sem nome', () => {
+    expect(textoSaudacao('vovo-a', 'Maria')).toBe('Querida Maria,');
+    expect(textoSaudacao('titio', 'Beto')).toBe('Querido Beto,');
+    expect(textoSaudacao('titia', '   ')).toBe('');
+  });
+
+  it('parabéns com e sem nome', () => {
+    expect(textoParabens('Ana')).toBe('Parabéns, Ana!');
+    expect(textoParabens('')).toBe('Parabéns!');
+  });
+});
+
+describe('texto da frente', () => {
+  it('padrão é o primeiro texto pronto e não vai no link', () => {
+    const link = montarLink(BASE, { papel: 'titia', mecanica: 'laco', frente: 0 });
+    expect(link).not.toMatch(/[?&][fx]=/);
+    expect(lerParametros(busca(link)).frente).toBe(FRENTES[0].texto);
+  });
+
+  it('texto pronto vai como índice', () => {
+    const link = montarLink(BASE, { papel: 'titia', mecanica: 'laco', frente: 3 });
+    expect(new URL(link).searchParams.get('f')).toBe('3');
+    expect(lerParametros(busca(link)).frente).toBe(FRENTES[3].texto);
+  });
+
+  it('recado vai junto com a capa, junta espaços e corta no limite', () => {
+    const recado = `  Oi,\n\n  ${'a'.repeat(300)}  `;
+    const link = montarLink(BASE, { papel: 'titia', mecanica: 'laco', frente: 2, recado });
+    expect(new URL(link).searchParams.get('f')).toBe('2');
+    const P = lerParametros(busca(link));
+    expect(P.frente).toBe(FRENTES[2].texto);
+    expect(P.recado.startsWith('Oi, aaa')).toBe(true);
+    expect(P.recado.length).toBeLessThanOrEqual(RECADO_MAX);
+  });
+
+  it('sem recado, x não vai no link e o recado fica vazio', () => {
+    const link = montarLink(BASE, { papel: 'titia', mecanica: 'laco', recado: '   ' });
+    expect(new URL(link).searchParams.has('x')).toBe(false);
+    expect(lerParametros(busca(link)).recado).toBe('');
+  });
+
+  it('índice inválido cai no padrão', () => {
+    for (const f of ['99', '-1', '1.5', 'abc', '__proto__']) {
+      expect(lerParametros(`?f=${f}`).frente).toBe(FRENTES[0].texto);
+    }
   });
 });

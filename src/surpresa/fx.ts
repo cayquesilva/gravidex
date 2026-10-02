@@ -26,8 +26,8 @@ export function brilhos(): HTMLElement {
   return h('div', { className: 'brilhos', 'aria-hidden': 'true' }, ...kids);
 }
 
-/** 44 peças (círculo, losango, estrela, tira) saindo do centro (seed fixa). */
-export function confete(atraso: number): HTMLElement {
+/** 44 peças (círculo, losango, estrela, tira) saindo de (x, y) — padrão: centro, 45 % do topo (seed fixa). */
+export function confete(atraso: number, x = '50%', y = '45%'): HTMLElement {
   const R = rng(42);
   const kids = Array.from({ length: 44 }, (_, i) => {
     const ang = R() * Math.PI * 2;
@@ -50,5 +50,5 @@ export function confete(atraso: number): HTMLElement {
       },
     });
   });
-  return h('div', { className: 'confetes', 'aria-hidden': 'true' }, ...kids);
+  return h('div', { className: 'confetes', 'aria-hidden': 'true', style: { '--cx': x, '--cy': y } }, ...kids);
 }

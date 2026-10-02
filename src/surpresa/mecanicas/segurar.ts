@@ -39,7 +39,6 @@ export const montar: Montar = (ctx) => {
   const abrir = () => {
     g.area.style.transform = 'none';
     g.abrir('translate(-40px,-320px) rotate(-35deg)');
-    ctx.abrir();
   };
 
   const tick = (t: number) => {

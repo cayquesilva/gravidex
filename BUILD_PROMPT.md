@@ -61,7 +61,7 @@ Há duas páginas:
 ## 2. Contrato da URL (fonte única de verdade)
 
 ```
-/?p=<papel>&n=<nome>&m=<mecanica>[&t=<toques>]
+/?p=<papel>&n=<nome>&m=<mecanica>[&t=<toques>][&f=<capa>][&x=<recado>]
 ```
 
 | Param | Valores | Padrão | Regra |
@@ -70,6 +70,8 @@ Há duas páginas:
 | `n` | texto | vazio | `trim()`, no máximo 24 caracteres; renderizar com `textContent` (nunca innerHTML) |
 | `m` | `segurar` `laco` `tampa` `envelope` `raspar` | `laco` | valor desconhecido → padrão |
 | `t` | 1–10 | 5 | só para `envelope` |
+| `f` | índice em `FRENTES` | 0 (omitido) | texto pronto da capa da cartinha; índice inválido → padrão |
+| `x` | texto | — | recado escrito pelos pais, mostrado entre a capa e a promoção; espaços colapsados, no máximo 180 caracteres; vazio pula a etapa |
 
 - Monte as URLs com `URL` + `URLSearchParams`. Nunca concatene strings.
 - O papel **nunca** aparece por extenso na URL nem no cartão.

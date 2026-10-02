@@ -74,6 +74,25 @@ select.campo { font-weight: 700; cursor: pointer; }
 .pessoa .cor { width: 14px; height: 44px; border-radius: 7px; flex: none; }
 .pessoa .nome { flex: 1 1 200px; min-width: 0; }
 .remover { width: 44px; height: 44px; flex: none; border: 0; border-radius: 12px; background: oklch(0.95 0.01 280); cursor: pointer; font: 700 18px/1 Nunito, sans-serif; }
+.frente-cfg { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding-left: 24px; }
+.frente-rotulo { font: 800 12px/1 Nunito, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--tinta-3); }
+.frente-previa { flex: 1 1 260px; margin: 0; font: italic 500 14px/1.45 Nunito, sans-serif; color: var(--tinta-2); }
+.frente-escrito { flex: 1 1 100%; display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.frente-texto { width: 100%; resize: vertical; font-weight: 500; line-height: 1.45; }
+.frente-contador { align-self: flex-end; font: 700 12px/1 Nunito, sans-serif; color: var(--tinta-3); }
+
+.foto-cfg { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.foto-previa {
+  width: 150px; padding: 7px 7px 22px; flex: none;
+  background: #fff; border-radius: 4px; box-shadow: 0 4px 12px rgba(40, 30, 60, .12);
+  transform: rotate(-3deg);
+}
+.foto-previa img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: oklch(0.93 0.02 85); }
+.foto-cfg:not(.tem-foto) .foto-previa img { visibility: hidden; }
+.foto-info { flex: 1 1 280px; display: flex; flex-direction: column; gap: 6px; }
+.foto-info p { margin: 0; }
+.foto-info code { font: 700 13px/1 ui-monospace, monospace; background: oklch(0.94 0.01 280); padding: 2px 5px; border-radius: 5px; }
+
 .add { align-self: flex-start; border: 2px dashed oklch(0.75 0.03 280); background: none; padding: 12px 18px; border-radius: 14px; font: 700 15px/1 Nunito, sans-serif; cursor: pointer; }
 
 /* Cartões (tela) */
@@ -95,6 +114,7 @@ select.campo { font-weight: 700; cursor: pointer; }
 
 @media (max-width: 520px) {
   .wrap { padding: 32px 16px 64px; }
+  .frente-cfg { padding-left: 0; }
   .topo h1 { font-size: 32px; }
   .primario { margin-left: 0; }
 }
