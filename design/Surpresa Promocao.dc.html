@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#efece6;font-family:Nunito,system-ui,sans-serif;color:oklch(0.32 0.04 280)}
+a{color:oklch(0.5 0.12 15)}a:hover{color:oklch(0.4 0.12 15)}
+.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#1a1a1a}.dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.55)}.dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:36px;box-shadow:0 10px 30px rgba(0,0,0,.08);overflow:hidden}.dv-opt:target .dv-oid{background:#2a78d6;color:#fff}.dv-next{margin:22px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.5)}
+@keyframes dcBurst{0%{transform:translate(-50%,-50%) scale(0) rotate(0);opacity:1}75%{opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1) rotate(var(--r));opacity:0}}
+@keyframes dcTwinkle{0%,100%{opacity:.25;transform:scale(.6)}50%{opacity:1;transform:scale(1)}}
+@keyframes dcBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+</style>
+</helmet>
+<section class="dv-turn" id="t3">
+<div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">Presente · 3 gestos (a partir de <a class="dv-oid" href="#1c">1c</a>) · mensagem indica o bebê</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="3a">
+<div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a>Segurar até abrir<button onClick="{{ resetG }}" style="margin-left:auto;border:0;background:none;font:600 11px system-ui;color:#2a78d6;cursor:pointer;padding:0">↺ reiniciar</button></div>
+<div class="dv-card" style="width:380px">
+<div style="position:relative;height:720px;background:oklch(0.94 0.035 160);overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;padding:84px 32px 0;box-sizing:border-box;user-select:none;-webkit-user-select:none">
+{{ sparklesC }}
+<div style="display:flex;flex-direction:column;align-items:center;opacity:{{ g.headOp }};transition:opacity .5s ease;position:relative">
+<div style="font:800 12px/1 Nunito,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:oklch(0.45 0.08 160)">entrega especial</div>
+<div style="font:600 32px/1.12 Fredoka,sans-serif;margin-top:14px;text-wrap:balance">Chegou um presente para você</div>
+</div>
+<div onPointerDown="{{ gStart }}" onPointerUp="{{ gEnd }}" onPointerLeave="{{ gEnd }}" onPointerCancel="{{ gEnd }}" style="position:relative;width:240px;height:250px;margin-top:70px;cursor:pointer;touch-action:none;transform:{{ g.boxTf }}">
+<div style="position:absolute;left:20px;right:20px;bottom:0;height:170px;border-radius:14px;background:oklch(0.80 0.09 10);box-shadow:0 18px 36px oklch(0.45 0.08 160 / .22);opacity:{{ g.boxOp }};transform:{{ g.bodyTf }};transition:opacity .4s ease .35s,transform .5s ease .3s"><div style="position:absolute;left:50%;top:0;bottom:0;width:30px;margin-left:-15px;background:oklch(0.80 0.09 85)"></div></div>
+<div style="position:absolute;left:8px;right:8px;top:30px;height:54px;transform:{{ g.lidTf }};opacity:{{ g.lidOp }};transition:transform .7s cubic-bezier(.2,.8,.3,1),opacity .5s ease .3s">
+<div style="position:absolute;left:46px;top:-34px;width:52px;height:44px;border-radius:50%;border:10px solid oklch(0.80 0.09 85);box-sizing:border-box;transform:rotate(-25deg)"></div>
+<div style="position:absolute;right:46px;top:-34px;width:52px;height:44px;border-radius:50%;border:10px solid oklch(0.80 0.09 85);box-sizing:border-box;transform:rotate(25deg)"></div>
+<div style="position:absolute;inset:0;border-radius:12px;background:oklch(0.74 0.10 10);box-shadow:0 6px 0 oklch(0.65 0.10 10 / .5)"><div style="position:absolute;left:50%;top:0;bottom:0;width:32px;margin-left:-16px;background:oklch(0.80 0.09 85)"></div></div>
+</div>
+</div>
+<div style="width:200px;height:12px;border-radius:99px;background:oklch(0.88 0.04 160);margin-top:48px;overflow:hidden;opacity:{{ g.headOp }};transition:opacity .4s;position:relative"><div style="height:100%;width:{{ g.bar }};border-radius:99px;background:oklch(0.62 0.12 160)"></div></div>
+<div style="font:700 15px/1.4 Nunito,sans-serif;margin-top:14px;color:oklch(0.42 0.05 160);opacity:{{ g.headOp }};transition:opacity .4s;position:relative">{{ g.hint }}</div>
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;pointer-events:none;opacity:{{ g.msgOp }};transform:{{ g.msgTf }};transition:opacity .6s ease .45s,transform .8s cubic-bezier(.3,1.5,.5,1) .45s">
+{{ burstG }}
+<div style="font:700 21px/1.35 Nunito,sans-serif;text-wrap:balance;position:relative">{{ role.pre }}</div>
+<div style="font:700 100px/1 Fredoka,sans-serif;color:oklch(0.52 0.12 160);margin-top:10px;position:relative">{{ role.title }}</div>
+<div style="font:600 22px/1.3 Fredoka,sans-serif;margin-top:22px;position:relative;padding:10px 20px;border-radius:99px;background:oklch(0.90 0.05 160)">Tem um bebê a caminho!</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="3b">
+<div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a>Arrastar o laço para desatar<button onClick="{{ resetD }}" style="margin-left:auto;border:0;background:none;font:600 11px system-ui;color:#2a78d6;cursor:pointer;padding:0">↺ reiniciar</button></div>
+<div class="dv-card" style="width:380px">
+<div style="position:relative;height:720px;background:oklch(0.94 0.035 290);overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;padding:84px 32px 0;box-sizing:border-box;user-select:none;-webkit-user-select:none">
+{{ sparklesD }}
+<div style="display:flex;flex-direction:column;align-items:center;opacity:{{ d.headOp }};transition:opacity .5s ease;position:relative">
+<div style="font:800 12px/1 Nunito,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:oklch(0.45 0.09 290)">entrega especial</div>
+<div style="font:600 32px/1.12 Fredoka,sans-serif;margin-top:14px;text-wrap:balance">Chegou um presente para você</div>
+</div>
+<div style="position:relative;width:240px;height:250px;margin-top:70px">
+<div style="position:absolute;left:20px;right:20px;bottom:0;height:170px;border-radius:14px;background:oklch(0.80 0.09 230);box-shadow:0 18px 36px oklch(0.45 0.08 290 / .22);opacity:{{ d.boxOp }};transform:{{ d.bodyTf }};transition:opacity .4s ease .35s,transform .5s ease .3s"><div style="position:absolute;left:50%;top:0;bottom:0;width:30px;margin-left:-15px;background:oklch(0.80 0.09 10);transform-origin:top;transform:{{ d.ribbonTf }}"></div></div>
+<div style="position:absolute;left:8px;right:8px;top:30px;height:54px;transform:{{ d.lidTf }};opacity:{{ d.lidOp }};transition:transform .7s cubic-bezier(.2,.8,.3,1),opacity .5s ease .3s">
+<div style="position:absolute;left:46px;top:-34px;width:52px;height:44px;border-radius:50%;border:10px solid oklch(0.80 0.09 10);box-sizing:border-box;transform:{{ d.bowL }};opacity:{{ d.bowOp }}"></div>
+<div style="position:absolute;right:46px;top:-34px;width:52px;height:44px;border-radius:50%;border:10px solid oklch(0.80 0.09 10);box-sizing:border-box;transform:{{ d.bowR }};opacity:{{ d.bowOp }}"></div>
+<div style="position:absolute;inset:0;border-radius:12px;background:oklch(0.74 0.10 230);box-shadow:0 6px 0 oklch(0.65 0.10 230 / .5)"><div style="position:absolute;left:50%;top:0;bottom:0;width:32px;margin-left:-16px;background:oklch(0.80 0.09 10);transform-origin:top;transform:{{ d.ribbonTf }}"></div></div>
+</div>
+</div>
+<div style="position:relative;width:260px;height:56px;margin-top:44px;border-radius:99px;background:oklch(0.88 0.04 290);opacity:{{ d.headOp }};transition:opacity .4s">
+<div style="position:absolute;left:28px;top:24px;height:8px;width:{{ d.tail }};background:oklch(0.80 0.09 10);border-radius:4px"></div>
+<div style="position:absolute;right:22px;top:19px;font:800 14px/18px Nunito,sans-serif;color:oklch(0.55 0.06 290)">→</div>
+<div onPointerDown="{{ dDown }}" onPointerMove="{{ dMove }}" onPointerUp="{{ dUp }}" onPointerCancel="{{ dUp }}" style="position:absolute;left:4px;top:4px;width:48px;height:48px;border-radius:50%;background:oklch(0.80 0.09 10);box-shadow:0 4px 10px oklch(0.45 0.1 10 / .35);cursor:grab;touch-action:none;transform:{{ d.knobTf }};transition:{{ d.knobTr }};display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;background:#fffdf8;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)"></div></div>
+</div>
+<div style="font:700 15px/1.4 Nunito,sans-serif;margin-top:14px;color:oklch(0.42 0.05 290);opacity:{{ d.headOp }};transition:opacity .4s">Arraste o laço para desatar</div>
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;pointer-events:none;opacity:{{ d.msgOp }};transform:{{ d.msgTf }};transition:opacity .6s ease .45s,transform .8s cubic-bezier(.3,1.5,.5,1) .45s">
+{{ burstD }}
+<div style="font:700 21px/1.35 Nunito,sans-serif;text-wrap:balance;position:relative">{{ role.pre }}</div>
+<div style="font:700 100px/1 Fredoka,sans-serif;color:oklch(0.52 0.13 290);margin-top:10px;position:relative">{{ role.title }}</div>
+<div style="font:600 22px/1.3 Fredoka,sans-serif;margin-top:22px;position:relative;padding:10px 20px;border-radius:99px;background:oklch(0.90 0.05 290)">Tem um bebê a caminho!</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="3c">
+<div class="dv-olabel"><a class="dv-oid" href="#3c">3c</a>Puxar a tampa para cima<button onClick="{{ resetE }}" style="margin-left:auto;border:0;background:none;font:600 11px system-ui;color:#2a78d6;cursor:pointer;padding:0">↺ reiniciar</button></div>
+<div class="dv-card" style="width:380px">
+<div style="position:relative;height:720px;background:oklch(0.95 0.035 85);overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;padding:84px 32px 0;box-sizing:border-box;user-select:none;-webkit-user-select:none">
+{{ sparklesE }}
+<div style="display:flex;flex-direction:column;align-items:center;opacity:{{ e.headOp }};transition:opacity .5s ease;position:relative">
+<div style="font:800 12px/1 Nunito,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:oklch(0.48 0.08 70)">entrega especial</div>
+<div style="font:600 32px/1.12 Fredoka,sans-serif;margin-top:14px;text-wrap:balance">Chegou um presente para você</div>
+</div>
+<div style="font:800 22px/1 Nunito,sans-serif;color:oklch(0.55 0.08 70);margin-top:56px;opacity:{{ e.arrowOp }};transition:opacity .3s">↑</div>
+<div style="position:relative;width:240px;height:250px;margin-top:40px">
+<div style="position:absolute;left:0;right:0;top:20px;height:160px;border-radius:50%;background:radial-gradient(closest-side,oklch(0.99 0.07 95),oklch(0.97 0.06 95 / 0));opacity:{{ e.glow }}"></div>
+<div style="position:absolute;left:20px;right:20px;bottom:0;height:170px;border-radius:14px;background:oklch(0.80 0.09 160);box-shadow:0 18px 36px oklch(0.45 0.08 85 / .25);opacity:{{ e.boxOp }};transform:{{ e.bodyTf }};transition:opacity .4s ease .35s,transform .5s ease .3s"><div style="position:absolute;left:50%;top:0;bottom:0;width:30px;margin-left:-15px;background:oklch(0.80 0.09 10)"></div></div>
+<div onPointerDown="{{ eDown }}" onPointerMove="{{ eMove }}" onPointerUp="{{ eUp }}" onPointerCancel="{{ eUp }}" style="position:absolute;left:8px;right:8px;top:30px;height:54px;cursor:grab;touch-action:none;transform:{{ e.lidTf }};opacity:{{ e.lidOp }};transition:{{ e.lidTr }}">
+<div style="position:absolute;left:46px;top:-34px;width:52px;height:44px;border-radius:50%;border:10px solid oklch(0.80 0.09 10);box-sizing:border-box;transform:rotate(-25deg)"></div>
+<div style="position:absolute;right:46px;top:-34px;width:52px;height:44px;border-radius:50%;border:10px solid oklch(0.80 0.09 10);box-sizing:border-box;transform:rotate(25deg)"></div>
+<div style="position:absolute;inset:0;border-radius:12px;background:oklch(0.72 0.10 160);box-shadow:0 6px 0 oklch(0.62 0.10 160 / .5)"><div style="position:absolute;left:50%;top:0;bottom:0;width:32px;margin-left:-16px;background:oklch(0.80 0.09 10)"></div></div>
+</div>
+</div>
+<div style="font:700 15px/1.4 Nunito,sans-serif;margin-top:44px;color:oklch(0.45 0.05 70);opacity:{{ e.headOp }};transition:opacity .4s">Puxe a tampa para cima</div>
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;pointer-events:none;opacity:{{ e.msgOp }};transform:{{ e.msgTf }};transition:opacity .6s ease .45s,transform .8s cubic-bezier(.3,1.5,.5,1) .45s">
+{{ burstE }}
+<div style="font:700 21px/1.35 Nunito,sans-serif;text-wrap:balance;position:relative">{{ role.pre }}</div>
+<div style="font:700 100px/1 Fredoka,sans-serif;color:oklch(0.55 0.12 60);margin-top:10px;position:relative">{{ role.title }}</div>
+<div style="font:600 22px/1.3 Fredoka,sans-serif;margin-top:22px;position:relative;padding:10px 20px;border-radius:99px;background:oklch(0.91 0.05 85)">Tem um bebê a caminho!</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Próximos: "fica com a <a class="dv-oid" href="#3b">3b</a>" · "segurar da <a class="dv-oid" href="#3a">3a</a> com a mensagem em tela cheia" · "cor do presente muda por papel"</p>
+</section>
+
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Cartões impressos com QR · um por pessoa</span></div>
+<div class="dv-opts">
+<sc-for list="{{ cards }}" as="k" hint-placeholder-count="4">
+<div class="dv-opt">
+<div class="dv-olabel"><span class="dv-oid">{{ k.code }}</span>link abre como {{ k.role }}</div>
+<div style="width:320px;height:460px;border-radius:18px;background:{{ k.bg }};box-shadow:0 10px 30px rgba(0,0,0,.08);display:flex;flex-direction:column;align-items:center;padding:34px 28px 26px;box-sizing:border-box;text-align:center;position:relative;overflow:hidden">
+<div style="position:absolute;top:18px;right:20px;width:16px;height:16px;background:oklch(0.99 0.01 85);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)"></div>
+<div style="position:absolute;bottom:22px;left:22px;width:12px;height:12px;background:oklch(0.99 0.01 85);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)"></div>
+<div style="display:flex;align-items:flex-end;gap:8px;width:100%;font:700 15px/1 Nunito,sans-serif"><span>Para:</span><div style="flex:1;border-bottom:2px dotted oklch(0.32 0.04 280 / .5);height:14px"></div></div>
+<div style="font:600 27px/1.12 Fredoka,sans-serif;margin-top:26px;text-wrap:balance">Tem uma surpresa lacrada para você</div>
+<div style="margin-top:22px;width:172px;height:172px;border-radius:16px;background:#fff;padding:12px;box-sizing:border-box;display:flex;align-items:center;justify-content:center">{{ k.qr }}</div>
+<div style="font:700 13px/1.4 Nunito,sans-serif;margin-top:16px;color:oklch(0.35 0.04 280)">Aponte a câmera do celular</div>
+</div>
+</div>
+</sc-for>
+</div>
+<p class="dv-next">A cor do cartão identifica o papel (só vocês sabem). Defina o endereço real no Tweak "link" — os QR se atualizam. Próximos: "versão A4 com os 4 cartões para recortar" · "verso do cartão"</p>
+</section>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Romper o lacre → mensagem de promoção · papel atual: {{ role.title }}</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a">
+<div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Envelope com selo de cera · toques<button onClick="{{ resetA }}" style="margin-left:auto;border:0;background:none;font:600 11px system-ui;color:#2a78d6;cursor:pointer;padding:0">↺ reiniciar</button></div>
+<div class="dv-card" style="width:380px">
+<div style="position:relative;height:720px;background:oklch(0.94 0.035 230);overflow:hidden">
+{{ sparklesA }}
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:96px 32px 0;box-sizing:border-box;text-align:center;opacity:{{ a.preOpacity }};transition:opacity .5s ease .9s">
+<div style="font:800 12px/1 Nunito,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:oklch(0.45 0.08 250)">correspondência mágica</div>
+<div style="font:600 32px/1.12 Fredoka,sans-serif;margin-top:14px;text-wrap:balance">Tem uma notícia lacrada para você</div>
+<div style="position:relative;width:280px;height:190px;margin-top:80px;transform:{{ a.envTf }};transition:transform .25s cubic-bezier(.3,1.6,.5,1)">
+<div style="position:absolute;inset:0;border-radius:16px;background:oklch(0.82 0.07 20);box-shadow:0 18px 40px oklch(0.5 0.08 250 / .18)"></div>
+<div style="position:absolute;left:16px;right:16px;top:14px;height:160px;border-radius:10px;background:#fffdf8;z-index:2;transform:{{ a.letterTf }};transition:transform .8s cubic-bezier(.3,1.3,.5,1) .25s;display:flex;align-items:flex-start;justify-content:center;padding-top:22px;box-sizing:border-box"><div style="width:22px;height:22px;background:oklch(0.80 0.09 85);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)"></div></div>
+<div style="position:absolute;inset:0;border-radius:16px;background:oklch(0.86 0.06 20);clip-path:polygon(0 34%,50% 70%,100% 34%,100% 100%,0 100%);z-index:3"></div>
+<div style="position:absolute;left:0;right:0;top:0;height:120px;border-radius:16px 16px 0 0;background:oklch(0.78 0.08 20);clip-path:polygon(0 0,100% 0,50% 100%);z-index:4;transform-origin:top;transform:{{ a.flapTf }};opacity:{{ a.flapOp }};transition:transform .5s ease,opacity .4s ease .1s"></div>
+<button onClick="{{ tapA }}" aria-label="Tocar no lacre" style="position:absolute;left:98px;top:66px;width:84px;height:84px;border:0;padding:0;background:none;z-index:5;cursor:pointer;transform:{{ a.sealTf }};transition:transform .22s cubic-bezier(.3,1.8,.5,1)">
+<div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 30%,oklch(0.70 0.15 15),oklch(0.50 0.15 15));box-shadow:0 6px 14px oklch(0.4 0.12 15 / .45),inset 0 -4px 8px oklch(0.4 0.12 15 / .5);clip-path:inset(0 50% 0 0);transform:{{ a.halfL }};opacity:{{ a.halfOp }};transition:transform .6s ease,opacity .6s ease"><div style="position:absolute;inset:11px;border-radius:50%;border:2px dashed oklch(0.9 0.05 15 / .55)"></div><div style="position:absolute;left:29px;top:29px;width:26px;height:26px;background:oklch(0.88 0.06 15);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)"></div></div>
+<div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 30%,oklch(0.70 0.15 15),oklch(0.50 0.15 15));box-shadow:0 6px 14px oklch(0.4 0.12 15 / .45),inset 0 -4px 8px oklch(0.4 0.12 15 / .5);clip-path:inset(0 0 0 50%);transform:{{ a.halfR }};opacity:{{ a.halfOp }};transition:transform .6s ease,opacity .6s ease"><div style="position:absolute;inset:11px;border-radius:50%;border:2px dashed oklch(0.9 0.05 15 / .55)"></div><div style="position:absolute;left:29px;top:29px;width:26px;height:26px;background:oklch(0.88 0.06 15);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)"></div></div>
+<svg width="84" height="84" viewBox="0 0 84 84" style="position:absolute;inset:0;opacity:{{ a.halfOp }}"><polyline points="42,3 37,20 46,33 35,48 45,62 39,81" fill="none" stroke="oklch(0.95 0.03 15)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="100" stroke-dashoffset="{{ a.crack }}" style="transition:stroke-dashoffset .25s ease"></polyline></svg>
+</button>
+</div>
+<div style="display:flex;gap:8px;margin-top:56px">
+<sc-for list="{{ a.dots }}" as="d" hint-placeholder-count="5"><div style="width:10px;height:10px;border-radius:50%;background:{{ d.bg }};transition:background .2s"></div></sc-for>
+</div>
+<div style="font:700 15px/1.4 Nunito,sans-serif;margin-top:14px;color:oklch(0.45 0.05 260)">{{ a.hint }}</div>
+</div>
+<div style="position:absolute;inset:0;background:oklch(0.975 0.015 85);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 28px;box-sizing:border-box;opacity:{{ a.msgOpacity }};pointer-events:{{ a.msgPe }};transition:opacity .6s ease .9s">
+{{ burstA }}
+<div style="font:700 21px/1.35 Nunito,sans-serif;text-wrap:balance;position:relative">{{ role.pre }}</div>
+<div style="font:700 104px/1 Fredoka,sans-serif;color:oklch(0.60 0.15 15);margin-top:10px;letter-spacing:-.01em;position:relative;transform:{{ a.titleTf }};transition:transform .7s cubic-bezier(.3,1.7,.5,1) 1.1s">{{ role.title }}</div>
+<div style="display:flex;gap:10px;margin-top:28px;position:relative"><div style="width:12px;height:12px;border-radius:50%;background:oklch(0.80 0.09 10)"></div><div style="width:12px;height:12px;border-radius:50%;background:oklch(0.80 0.09 85)"></div><div style="width:12px;height:12px;border-radius:50%;background:oklch(0.80 0.09 230)"></div></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="1b">
+<div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Raspadinha · raspar com o dedo<button onClick="{{ resetB }}" style="margin-left:auto;border:0;background:none;font:600 11px system-ui;color:#2a78d6;cursor:pointer;padding:0">↺ reiniciar</button></div>
+<div class="dv-card" style="width:380px">
+<div style="position:relative;height:720px;background:oklch(0.94 0.035 10);overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;padding:84px 32px 0;box-sizing:border-box">
+{{ sparklesB }}
+<div style="display:flex;flex-direction:column;align-items:center;opacity:{{ b.headOp }};transform:{{ b.headTf }};transition:opacity .5s ease,transform .5s ease;position:relative">
+<div style="font:800 12px/1 Nunito,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:oklch(0.48 0.09 10)">segredo escondido</div>
+<div style="font:600 32px/1.12 Fredoka,sans-serif;margin-top:14px;text-wrap:balance">Alguém tem um recado especial</div>
+</div>
+<div style="position:relative;width:300px;height:390px;margin-top:40px;border-radius:28px;background:#fffdf8;box-shadow:0 20px 44px oklch(0.5 0.08 10 / .2);transform:{{ b.ticketTf }};transition:transform .7s cubic-bezier(.3,1.5,.5,1)">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 22px">
+<div style="position:absolute;top:22px;left:22px;width:14px;height:14px;background:oklch(0.80 0.09 85);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)"></div>
+<div style="position:absolute;bottom:26px;right:24px;width:18px;height:18px;background:oklch(0.80 0.09 230);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)"></div>
+<div style="font:700 19px/1.35 Nunito,sans-serif;text-wrap:balance">{{ role.pre }}</div>
+<div style="font:700 86px/1 Fredoka,sans-serif;color:oklch(0.55 0.13 250);margin-top:10px">{{ role.title }}</div>
+</div>
+<canvas ref="{{ canvasRef }}" onPointerDown="{{ scrDown }}" onPointerMove="{{ scrMove }}" onPointerUp="{{ scrUp }}" onPointerCancel="{{ scrUp }}" style="position:absolute;inset:0;width:100%;height:100%;border-radius:28px;touch-action:none;cursor:pointer;opacity:{{ b.canvasOp }};pointer-events:{{ b.canvasPe }};transition:opacity .6s ease"></canvas>
+{{ burstB }}
+</div>
+<div style="font:700 15px/1.4 Nunito,sans-serif;margin-top:28px;color:oklch(0.45 0.05 10);opacity:{{ b.headOp }};transition:opacity .4s;position:relative">Raspe o cartão com o dedo</div>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="1c">
+<div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Presente · segurar até abrir<button onClick="{{ resetC }}" style="margin-left:auto;border:0;background:none;font:600 11px system-ui;color:#2a78d6;cursor:pointer;padding:0">↺ reiniciar</button></div>
+<div class="dv-card" style="width:380px">
+<div style="position:relative;height:720px;background:oklch(0.94 0.035 160);overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;padding:84px 32px 0;box-sizing:border-box;user-select:none;-webkit-user-select:none">
+{{ sparklesC }}
+<div style="display:flex;flex-direction:column;align-items:center;opacity:{{ c.headOp }};transition:opacity .5s ease;position:relative">
+<div style="font:800 12px/1 Nunito,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:oklch(0.45 0.08 160)">entrega especial</div>
+<div style="font:600 32px/1.12 Fredoka,sans-serif;margin-top:14px;text-wrap:balance">Chegou um presente para você</div>
+</div>
+<div onPointerDown="{{ holdStart }}" onPointerUp="{{ holdEnd }}" onPointerLeave="{{ holdEnd }}" onPointerCancel="{{ holdEnd }}" style="position:relative;width:240px;height:250px;margin-top:70px;cursor:pointer;touch-action:none;transform:{{ c.boxTf }}">
+<div style="position:absolute;left:20px;right:20px;bottom:0;height:170px;border-radius:14px;background:oklch(0.80 0.09 10);box-shadow:0 18px 36px oklch(0.45 0.08 160 / .22);opacity:{{ c.boxOp }};transform:{{ c.bodyTf }};transition:opacity .4s ease .35s,transform .5s ease .3s"><div style="position:absolute;left:50%;top:0;bottom:0;width:30px;margin-left:-15px;background:oklch(0.80 0.09 85)"></div></div>
+<div style="position:absolute;left:8px;right:8px;top:30px;height:54px;transform:{{ c.lidTf }};opacity:{{ c.lidOp }};transition:transform .7s cubic-bezier(.2,.8,.3,1),opacity .5s ease .3s">
+<div style="position:absolute;left:46px;top:-34px;width:52px;height:44px;border-radius:50% 50% 50% 50%;border:10px solid oklch(0.80 0.09 85);box-sizing:border-box;transform:rotate(-25deg)"></div>
+<div style="position:absolute;right:46px;top:-34px;width:52px;height:44px;border-radius:50%;border:10px solid oklch(0.80 0.09 85);box-sizing:border-box;transform:rotate(25deg)"></div>
+<div style="position:absolute;inset:0;border-radius:12px;background:oklch(0.74 0.10 10);box-shadow:0 6px 0 oklch(0.65 0.10 10 / .5)"><div style="position:absolute;left:50%;top:0;bottom:0;width:32px;margin-left:-16px;background:oklch(0.80 0.09 85)"></div></div>
+</div>
+</div>
+<div style="width:200px;height:12px;border-radius:99px;background:oklch(0.88 0.04 160);margin-top:48px;overflow:hidden;opacity:{{ c.headOp }};transition:opacity .4s;position:relative"><div style="height:100%;width:{{ c.bar }};border-radius:99px;background:oklch(0.62 0.12 160)"></div></div>
+<div style="font:700 15px/1.4 Nunito,sans-serif;margin-top:14px;color:oklch(0.42 0.05 160);opacity:{{ c.headOp }};transition:opacity .4s;position:relative">{{ c.hint }}</div>
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;pointer-events:none;opacity:{{ c.msgOp }};transform:{{ c.msgTf }};transition:opacity .6s ease .45s,transform .8s cubic-bezier(.3,1.5,.5,1) .45s">
+{{ burstC }}
+<div style="font:700 21px/1.35 Nunito,sans-serif;text-wrap:balance;position:relative">{{ role.pre }}</div>
+<div style="font:700 100px/1 Fredoka,sans-serif;color:oklch(0.52 0.12 160);margin-top:10px;position:relative">{{ role.title }}</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Cada QR aponta para o mesmo link com <code>?p=vovo-a</code>, <code>vovo-o</code>, <code>titia</code> ou <code>titio</code> (+ <code>&amp;n=Nome</code> opcional). Próximos: "use só a <a class="dv-oid" href="#1a">1a</a>" · "junte o envelope da <a class="dv-oid" href="#1a">1a</a> com o presente da <a class="dv-oid" href="#1c">1c</a>" · "gerar os cartões com QR para imprimir"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;papel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;vovó&quot;,&quot;vovô&quot;,&quot;titia&quot;,&quot;titio&quot;],&quot;default&quot;:&quot;vovó&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;nome&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;link&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://exemplo.com/surpresa&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Cartões QR&quot;},&quot;toques&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;min&quot;:1,&quot;max&quot;:10,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Envelope (1a)&quot;}}">
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const PAL=['oklch(0.80 0.09 10)','oklch(0.80 0.09 85)','oklch(0.80 0.09 230)','oklch(0.80 0.09 160)','oklch(0.70 0.13 15)','oklch(0.72 0.11 290)'];
+const STAR='polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)';
+const ROLES=[['Vovó','promovida'],['Vovô','promovido'],['Titia','promovida'],['Titio','promovido']];
+const RMAP={'vovó':0,'vovo-a':0,'vovoa':0,'vovô':1,'vovo-o':1,'vovoo':1,'titia':2,'tia':2,'titio':3,'tio':3};
+class Component extends DCLogic {
+  state={taps:0,aOpen:false,bDone:false,prog:0,cOpen:false,shake:0,ra:0,rb:0,rc:0,gProg:0,gOpen:false,gShake:0,rg:0,dX:0,dOpen:false,dDrag:false,rd:0,eY:0,eOpen:false,eDrag:false,re:0};
+  canvasRef=React.createRef();
+  componentDidMount(){this.paint();const w=()=>{if(window.qrcode)this.forceUpdate();else this.qt=setTimeout(w,200);};w();}
+  componentWillUnmount(){cancelAnimationFrame(this.raf);cancelAnimationFrame(this.rafG);clearTimeout(this.qt);}
+  qr(url){if(!window.qrcode)return null;const q=window.qrcode(0,'M');q.addData(url);q.make();
+    const svg=q.createSvgTag({cellSize:4,margin:0,scalable:true}).replace('<svg ','<svg style="width:100%;height:100%;display:block" ');
+    return React.createElement('div',{style:{width:'100%',height:'100%'},dangerouslySetInnerHTML:{__html:svg}});}
+  gStart=()=>{if(this.state.gOpen)return;this.gHold=true;if(!this.rafG){this.glt=performance.now();this.rafG=requestAnimationFrame(this.tickG);}};
+  gEnd=()=>{this.gHold=false;};
+  tickG=t=>{const dt=t-this.glt;this.glt=t;let p=this.state.gProg+(this.gHold?dt/1800:-dt/700);p=Math.max(0,Math.min(1,p));
+    if(p>=1){this.rafG=null;this.gHold=false;this.setState({gProg:1,gOpen:true});return;}
+    this.setState({gProg:p,gShake:t});this.rafG=(p>0||this.gHold)?requestAnimationFrame(this.tickG):null;};
+  resetG=()=>{cancelAnimationFrame(this.rafG);this.rafG=null;this.setState(s=>({gProg:0,gOpen:false,rg:s.rg+1}));};
+  dragK(e){const el=e.currentTarget;return el.offsetWidth/el.getBoundingClientRect().width||1;}
+  dDown=e=>{if(this.state.dOpen)return;e.currentTarget.setPointerCapture?.(e.pointerId);this.dd={x:e.clientX,v:this.state.dX,k:this.dragK(e)};this.setState({dDrag:true});};
+  dMove=e=>{if(!this.dd)return;const v=Math.max(0,Math.min(1,this.dd.v+(e.clientX-this.dd.x)*this.dd.k/204));this.setState({dX:v});};
+  dUp=()=>{if(!this.dd)return;this.dd=null;if(this.state.dX>0.88)this.setState({dX:1,dDrag:false,dOpen:true});else this.setState({dX:0,dDrag:false});};
+  resetD=()=>this.setState(s=>({dX:0,dOpen:false,rd:s.rd+1}));
+  eDown=e=>{if(this.state.eOpen)return;e.currentTarget.setPointerCapture?.(e.pointerId);this.ed={y:e.clientY,v:this.state.eY,k:this.dragK(e)};this.setState({eDrag:true});};
+  eMove=e=>{if(!this.ed)return;const v=Math.max(0,Math.min(1,this.ed.v+(this.ed.y-e.clientY)*this.ed.k/150));this.setState({eY:v});};
+  eUp=()=>{if(!this.ed)return;this.ed=null;if(this.state.eY>0.7)this.setState({eDrag:false,eOpen:true});else this.setState({eY:0,eDrag:false});};
+  resetE=()=>this.setState(s=>({eY:0,eOpen:false,re:s.re+1}));
+  need(){return Math.max(1,this.props.toques??5);}
+  role(){
+    const q=new URLSearchParams(location.search);
+    const raw=(q.get('p')||this.props.papel||'vovó').toLowerCase();
+    const r=ROLES[RMAP[raw]??0];
+    const nome=(q.get('n')??this.props.nome??'').trim();
+    return {title:r[0],pre:nome?`${nome}, você foi ${r[1]} a`:`Você foi ${r[1]} a`};
+  }
+  burst(seed,active,top,delay){
+    if(!active)return null;
+    const R=rng(seed),kids=[];
+    for(let i=0;i<40;i++){
+      const ang=R()*Math.PI*2,d=110+R()*170,s=8+R()*12,k=Math.floor(R()*4);
+      kids.push(React.createElement('div',{key:i,style:{position:'absolute',left:'50%',top,width:k===3?s*0.5:s,height:k===3?s*1.6:s,background:PAL[i%PAL.length],borderRadius:k===0?'50%':k===3?3:0,clipPath:k===2?STAR:k===1?'polygon(50% 0,100% 50%,50% 100%,0 50%)':undefined,'--x':Math.cos(ang)*d+'px','--y':Math.sin(ang)*d+40+'px','--r':(R()*720-360)+'deg',animation:`dcBurst ${1.3+R()*0.8}s cubic-bezier(.15,.7,.3,1) ${delay}s both`}}));
+    }
+    return React.createElement('div',{key:'b'+seed,style:{position:'absolute',inset:0,pointerEvents:'none'}},kids);
+  }
+  sparkles(seed,color){
+    const R=rng(seed),kids=[];
+    for(let i=0;i<9;i++){const s=8+R()*12;
+      kids.push(React.createElement('div',{key:i,style:{position:'absolute',left:(5+R()*88)+'%',top:(4+R()*90)+'%',width:s,height:s,background:color,clipPath:STAR,animation:`dcTwinkle ${2.2+R()*2}s ease-in-out ${R()*2}s infinite`}}));}
+    return React.createElement('div',{style:{position:'absolute',inset:0,pointerEvents:'none'}},kids);
+  }
+  tapA=()=>{if(this.state.aOpen)return;const t=this.state.taps+1;this.setState({taps:t});if(t>=this.need())setTimeout(()=>this.setState({aOpen:true}),380);};
+  resetA=()=>this.setState(s=>({taps:0,aOpen:false,ra:s.ra+1}));
+  paint(){
+    const c=this.canvasRef.current;if(!c)return;
+    const w=c.offsetWidth,h=c.offsetHeight,dpr=window.devicePixelRatio||1;
+    c.width=w*dpr;c.height=h*dpr;const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);
+    x.globalCompositeOperation='source-over';
+    const g=x.createLinearGradient(0,0,w,h);g.addColorStop(0,'#c9b8e8');g.addColorStop(.5,'#e8bfd0');g.addColorStop(1,'#bcd6ef');
+    x.fillStyle=g;x.fillRect(0,0,w,h);
+    x.fillStyle='rgba(255,255,255,.35)';
+    for(let yy=14;yy<h;yy+=26)for(let xx=(yy/26%2)*13+10;xx<w;xx+=26){x.beginPath();x.arc(xx,yy,2.5,0,7);x.fill();}
+    x.fillStyle='#fff';x.textAlign='center';x.font='700 30px Fredoka, sans-serif';x.fillText('raspe aqui',w/2,h/2+4);
+    x.font='800 12px Nunito, sans-serif';x.fillText('✦  ✦  ✦',w/2,h/2+34);
+  }
+  pt(e){const c=this.canvasRef.current,r=c.getBoundingClientRect(),k=c.offsetWidth/r.width;return[(e.clientX-r.left)*k,(e.clientY-r.top)*k];}
+  scr(p){const x=this.canvasRef.current.getContext('2d');x.globalCompositeOperation='destination-out';x.lineCap='round';x.lineJoin='round';x.lineWidth=46;x.beginPath();const l=this.last||p;x.moveTo(l[0],l[1]);x.lineTo(p[0],p[1]);x.stroke();this.last=p;}
+  scrDown=e=>{if(this.state.bDone)return;this.drawing=true;this.last=null;e.currentTarget.setPointerCapture?.(e.pointerId);this.scr(this.pt(e));};
+  scrMove=e=>{if(!this.drawing)return;this.scr(this.pt(e));if(++this.mv%12===0)this.check();};
+  scrUp=()=>{if(!this.drawing)return;this.drawing=false;this.check();};
+  mv=0;
+  check(){const c=this.canvasRef.current,d=c.getContext('2d').getImageData(0,0,c.width,c.height).data;let n=0,t=0;for(let i=3;i<d.length;i+=64){t++;if(d[i]<128)n++;}if(n/t>0.5){this.drawing=false;this.setState({bDone:true});}}
+  resetB=()=>this.setState(s=>({bDone:false,rb:s.rb+1}),()=>this.paint());
+  holdStart=()=>{if(this.state.cOpen)return;this.holding=true;if(!this.raf){this.lt=performance.now();this.raf=requestAnimationFrame(this.tick);}};
+  holdEnd=()=>{this.holding=false;};
+  tick=t=>{const dt=t-this.lt;this.lt=t;let p=this.state.prog+(this.holding?dt/1800:-dt/700);p=Math.max(0,Math.min(1,p));
+    if(p>=1){this.raf=null;this.holding=false;this.setState({prog:1,cOpen:true});return;}
+    this.setState({prog:p,shake:t});
+    if(p>0||this.holding)this.raf=requestAnimationFrame(this.tick);else this.raf=null;};
+  resetC=()=>{cancelAnimationFrame(this.raf);this.raf=null;this.setState(s=>({prog:0,cOpen:false,rc:s.rc+1}));};
+  renderVals(){
+    const s=this.state,need=this.need(),o=s.aOpen,left=need-s.taps,dir=s.taps%2?-1:1;
+    const a={preOpacity:o?0:1,msgOpacity:o?1:0,msgPe:o?'auto':'none',
+      envTf:s.taps&&!o?`rotate(${dir*1.5}deg)`:'none',
+      sealTf:o?'none':s.taps?`rotate(${dir*12}deg) scale(${1+s.taps/need*0.18})`:'none',
+      crack:o?0:100*(1-Math.min(1,s.taps/need)),
+      halfL:o?'translate(-70px,40px) rotate(-40deg)':'none',halfR:o?'translate(70px,40px) rotate(40deg)':'none',halfOp:o?0:1,
+      flapTf:o?'rotateX(180deg)':'none',flapOp:o?0:1,letterTf:o?'translateY(-120px)':'none',
+      titleTf:o?'scale(1)':'scale(.3)',
+      dots:Array.from({length:need},(_,i)=>({bg:i<s.taps?'oklch(0.60 0.15 15)':'oklch(0.85 0.03 250)'})),
+      hint:left<=0?'Abrindo…':left===need?`Toque no lacre ${need} vezes`:left===1?'Só mais um toque!':`Faltam ${left} toques`};
+    const bd=s.bDone;
+    const b={headOp:bd?0:1,headTf:bd?'translateY(-20px)':'none',ticketTf:bd?'translateY(-30px) scale(1.06)':'none',canvasOp:bd?0:1,canvasPe:bd?'none':'auto'};
+    const co=s.cOpen,p=s.prog;
+    const c={headOp:co?0:1,boxTf:co?'none':`rotate(${Math.sin(s.shake/38)*p*7}deg) scale(${1+p*0.07})`,
+      lidTf:co?'translate(-40px,-320px) rotate(-35deg)':`translateY(${-p*10}px)`,lidOp:co?0:1,boxOp:co?0:1,bodyTf:co?'scale(.6) translateY(40px)':'none',
+      bar:(p*100)+'%',msgOp:co?1:0,msgTf:co?'scale(1)':'scale(.5) translateY(80px)',
+      hint:p>0.85?'Quase…':p>0.05?'Continue segurando!':'Segure o presente até ele abrir'};
+    const go=s.gOpen,gp=s.gProg;
+    const g={headOp:go?0:1,boxTf:go?'none':`rotate(${Math.sin(s.gShake/38)*gp*7}deg) scale(${1+gp*0.07})`,
+      lidTf:go?'translate(-40px,-320px) rotate(-35deg)':`translateY(${-gp*10}px)`,lidOp:go?0:1,boxOp:go?0:1,bodyTf:go?'scale(.6) translateY(40px)':'none',
+      bar:(gp*100)+'%',msgOp:go?1:0,msgTf:go?'scale(1)':'scale(.5) translateY(80px)',
+      hint:gp>0.85?'Quase…':gp>0.05?'Continue segurando!':'Segure o presente até ele abrir'};
+    const dO=s.dOpen,x=s.dX;
+    const d={headOp:dO?0:1,knobTf:`translateX(${x*204}px)`,knobTr:s.dDrag?'none':'transform .45s cubic-bezier(.3,1.6,.5,1)',tail:(x*204)+'px',
+      bowL:`translate(${-x*26}px,${x*10}px) rotate(${-25-x*70}deg) scale(${1-x*0.3})`,bowR:`translate(${x*26}px,${x*10}px) rotate(${25+x*70}deg) scale(${1-x*0.3})`,
+      bowOp:dO?0:1-x*0.6,ribbonTf:`scaleY(${dO?0:1-x*0.7})`,
+      lidTf:dO?'translate(40px,-320px) rotate(35deg)':`rotate(${x*3}deg)`,lidOp:dO?0:1,boxOp:dO?0:1,bodyTf:dO?'scale(.6) translateY(40px)':'none',
+      msgOp:dO?1:0,msgTf:dO?'scale(1)':'scale(.5) translateY(80px)'};
+    const eO=s.eOpen,y=s.eY;
+    const e={headOp:eO?0:1,arrowOp:eO||y>0.1?0:1,glow:eO?0:y,
+      lidTf:eO?'translate(-30px,-420px) rotate(-30deg)':`translateY(${-y*150}px) rotate(${-y*8}deg)`,lidOp:eO?0:1,
+      lidTr:s.eDrag?'none':'transform .6s cubic-bezier(.3,1.4,.5,1),opacity .5s ease .2s',
+      boxOp:eO?0:1,bodyTf:eO?'scale(.6) translateY(40px)':'none',msgOp:eO?1:0,msgTf:eO?'scale(1)':'scale(.5) translateY(80px)'};
+    const base=(this.props.link||'https://exemplo.com/surpresa').replace(/\/$/,'');
+    const cards=[['vovo-a','vovó','oklch(0.88 0.06 10)'],['vovo-o','vovô','oklch(0.88 0.06 230)'],['titia','titia','oklch(0.91 0.06 85)'],['titio','titio','oklch(0.88 0.06 160)']]
+      .map(([p,r,bg])=>({code:'?p='+p,role:r,bg,qr:this.qr(`${base}?p=${p}`)}));
+    return {role:this.role(),a,b,c,g,d,e,cards,gStart:this.gStart,gEnd:this.gEnd,resetG:this.resetG,dDown:this.dDown,dMove:this.dMove,dUp:this.dUp,resetD:this.resetD,eDown:this.eDown,eMove:this.eMove,eUp:this.eUp,resetE:this.resetE,
+      burstG:this.burst(41+s.rg,go,'45%',0.4),burstD:this.burst(53+s.rd,dO,'45%',0.4),burstE:this.burst(67+s.re,eO,'45%',0.4),
+      sparklesD:this.sparkles(17,'oklch(0.99 0.01 85)'),sparklesE:this.sparkles(19,'oklch(0.99 0.01 85)'),tapA:this.tapA,resetA:this.resetA,resetB:this.resetB,resetC:this.resetC,
+      canvasRef:this.canvasRef,scrDown:this.scrDown,scrMove:this.scrMove,scrUp:this.scrUp,holdStart:this.holdStart,holdEnd:this.holdEnd,
+      burstA:this.burst(11+s.ra,o,'45%',1.0),burstB:this.burst(23+s.rb,bd,'50%',0.15),burstC:this.burst(37+s.rc,co,'45%',0.4),
+      sparklesA:this.sparkles(5,'oklch(0.99 0.01 85)'),sparklesB:this.sparkles(8,'oklch(0.99 0.01 85)'),sparklesC:this.sparkles(13,'oklch(0.99 0.01 85)')};
+  }
+}
+</script>
+</body>
+</html>

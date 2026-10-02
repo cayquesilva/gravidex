@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:oklch(0.975 0.012 85);font-family:Nunito,system-ui,sans-serif;color:oklch(0.32 0.04 280)}
+a{color:oklch(0.5 0.12 15)}a:hover{color:oklch(0.4 0.12 15)}
+input,select,button{font:inherit;color:inherit}
+</style>
+</helmet>
+<div style="max-width:1080px;margin:0 auto;padding:48px 24px 80px;display:flex;flex-direction:column;gap:40px">
+
+<header style="display:flex;flex-direction:column;gap:8px">
+<div style="font:800 12px/1 Nunito,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:oklch(0.5 0.1 15)">só para os papais</div>
+<h1 style="margin:0;font:600 40px/1.1 Fredoka,sans-serif;text-wrap:balance">Criar as surpresas</h1>
+<p style="margin:0;font:500 17px/1.5 Nunito,sans-serif;max-width:560px;color:oklch(0.42 0.03 280)">Escolha como o lacre vai ser rompido, coloque quem vai receber e imprima os cartões com QR.</p>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:baseline;gap:12px"><span style="font:700 14px/1 Fredoka,sans-serif;width:28px;height:28px;border-radius:50%;background:oklch(0.32 0.04 280);color:#fff;display:flex;align-items:center;justify-content:center">1</span><h2 style="margin:0;font:600 22px/1.2 Fredoka,sans-serif">Endereço do site publicado</h2></div>
+<input value="{{ base }}" onChange="{{ onBase }}" placeholder="https://seu-site.netlify.app/" style="width:100%;max-width:560px;box-sizing:border-box;padding:14px 16px;border-radius:14px;border:2px solid {{ baseBorder }};background:#fff;font:600 16px/1.2 Nunito,sans-serif;outline:none">
+<sc-if value="{{ baseBad }}" hint-placeholder-val="{{ false }}"><div style="font:700 14px/1.4 Nunito,sans-serif;color:oklch(0.5 0.16 25)">O endereço precisa começar com https:// para os QR funcionarem nos celulares.</div></sc-if>
+<button onClick="{{ resetBase }}" style="align-self:flex-start;border:0;background:none;padding:0;font:700 13px/1 Nunito,sans-serif;color:oklch(0.5 0.12 15);cursor:pointer;text-decoration:underline">usar o endereço desta página</button>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:baseline;gap:12px"><span style="font:700 14px/1 Fredoka,sans-serif;width:28px;height:28px;border-radius:50%;background:oklch(0.32 0.04 280);color:#fff;display:flex;align-items:center;justify-content:center">2</span><h2 style="margin:0;font:600 22px/1.2 Fredoka,sans-serif">Como romper o lacre</h2></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px">
+<sc-for list="{{ mecs }}" as="m" hint-placeholder-count="5">
+<div onClick="{{ m.onPick }}" style="cursor:pointer;padding:16px;border-radius:18px;background:{{ m.bg }};border:2px solid {{ m.border }};display:flex;flex-direction:column;gap:8px;transition:border-color .15s,background .15s">
+<div style="display:flex;align-items:center;gap:8px"><div style="width:16px;height:16px;border-radius:50%;border:2px solid oklch(0.32 0.04 280);box-sizing:border-box;display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:oklch(0.32 0.04 280);opacity:{{ m.dot }}"></div></div><div style="font:600 17px/1.2 Fredoka,sans-serif">{{ m.label }}</div></div>
+<div style="font:500 14px/1.4 Nunito,sans-serif;color:oklch(0.42 0.03 280)">{{ m.dica }}</div>
+<button onClick="{{ m.onTest }}" style="align-self:flex-start;margin-top:4px;border:0;background:rgba(255,255,255,.8);padding:7px 12px;border-radius:99px;font:700 13px/1 Nunito,sans-serif;cursor:pointer">Testar ↗</button>
+</div>
+</sc-for>
+</div>
+<label style="display:flex;align-items:center;gap:10px;font:700 15px/1.3 Nunito,sans-serif;cursor:pointer;align-self:flex-start"><input type="checkbox" checked="{{ porPessoa }}" onChange="{{ togglePor }}" style="width:18px;height:18px;accent-color:oklch(0.5 0.12 15)">Mecânica diferente para cada pessoa</label>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:baseline;gap:12px"><span style="font:700 14px/1 Fredoka,sans-serif;width:28px;height:28px;border-radius:50%;background:oklch(0.32 0.04 280);color:#fff;display:flex;align-items:center;justify-content:center">3</span><h2 style="margin:0;font:600 22px/1.2 Fredoka,sans-serif">Quem vai receber</h2></div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ pessoas }}" as="p" hint-placeholder-count="4">
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px;border-radius:16px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.05)">
+<div style="width:14px;height:44px;border-radius:7px;background:{{ p.cor }}"></div>
+<input value="{{ p.nome }}" onChange="{{ p.onNome }}" maxlength="24" placeholder="Nome ou apelido (opcional)" style="flex:1 1 200px;min-width:0;padding:12px 14px;border-radius:12px;border:2px solid oklch(0.9 0.01 280);font:600 16px/1.2 Nunito,sans-serif;outline:none">
+<select onChange="{{ p.onPapel }}" style="padding:12px 14px;border-radius:12px;border:2px solid oklch(0.9 0.01 280);background:#fff;font:700 16px/1.2 Nunito,sans-serif">
+<sc-for list="{{ p.papelOpts }}" as="o" hint-placeholder-count="4"><option value="{{ o.v }}" selected="{{ o.sel }}">{{ o.label }}</option></sc-for>
+</select>
+<sc-if value="{{ p.showMec }}" hint-placeholder-val="{{ false }}">
+<select onChange="{{ p.onMec }}" style="padding:12px 14px;border-radius:12px;border:2px solid oklch(0.9 0.01 280);background:#fff;font:700 16px/1.2 Nunito,sans-serif">
+<sc-for list="{{ p.mecOpts }}" as="o" hint-placeholder-count="5"><option value="{{ o.v }}" selected="{{ o.sel }}">{{ o.label }}</option></sc-for>
+</select>
+</sc-if>
+<button onClick="{{ p.onRemove }}" aria-label="Remover" style="width:44px;height:44px;border:0;border-radius:12px;background:oklch(0.95 0.01 280);cursor:pointer;font:700 18px/1 Nunito,sans-serif">×</button>
+</div>
+</sc-for>
+</div>
+<button onClick="{{ add }}" style="align-self:flex-start;border:2px dashed oklch(0.75 0.03 280);background:none;padding:12px 18px;border-radius:14px;font:700 15px/1 Nunito,sans-serif;cursor:pointer">+ adicionar pessoa</button>
+<sc-if value="{{ dupWarn }}" hint-placeholder-val="{{ false }}"><div style="font:700 14px/1.4 Nunito,sans-serif;color:oklch(0.5 0.12 60)">Tem nomes repetidos com o mesmo papel. Confira se é isso mesmo.</div></sc-if>
+<sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}"><div style="font:700 14px/1.4 Nunito,sans-serif;color:oklch(0.5 0.16 25)">Adicione pelo menos uma pessoa.</div></sc-if>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+<div style="display:flex;align-items:baseline;gap:12px"><span style="font:700 14px/1 Fredoka,sans-serif;width:28px;height:28px;border-radius:50%;background:oklch(0.32 0.04 280);color:#fff;display:flex;align-items:center;justify-content:center">4</span><h2 style="margin:0;font:600 22px/1.2 Fredoka,sans-serif">Cartões</h2></div>
+<button onClick="{{ printAll }}" style="margin-left:auto;border:0;background:oklch(0.55 0.14 15);color:#fff;padding:14px 22px;border-radius:99px;font:700 16px/1 Nunito,sans-serif;cursor:pointer;opacity:{{ actOp }};pointer-events:{{ actPe }}">Imprimir todos (A4)</button>
+</div>
+<div style="font:500 14px/1.4 Nunito,sans-serif;color:oklch(0.45 0.03 280)">A cor do cartão indica o papel, e só vocês sabem qual é qual. Nada no cartão revela a surpresa.</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px">
+<sc-for list="{{ cards }}" as="k" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="aspect-ratio:80/115;border-radius:18px;background:{{ k.bg }};display:flex;flex-direction:column;align-items:center;padding:26px 22px 20px;box-sizing:border-box;text-align:center;position:relative;overflow:hidden">
+<div style="position:absolute;top:16px;right:18px;width:14px;height:14px;background:oklch(0.99 0.01 85);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)"></div>
+<div style="display:flex;align-items:flex-end;gap:6px;width:100%;font:700 14px/1 Nunito,sans-serif"><span>Para:</span><div style="flex:1;text-align:left;border-bottom:2px dotted oklch(0.32 0.04 280 / .5);min-height:14px;font:600 16px/1 Fredoka,sans-serif;padding-bottom:2px">{{ k.nome }}</div></div>
+<div style="font:600 22px/1.12 Fredoka,sans-serif;margin-top:18px;text-wrap:balance">Tem uma surpresa lacrada para você</div>
+<div style="margin-top:auto;width:62%;aspect-ratio:1;border-radius:14px;background:#fff;padding:10px;box-sizing:border-box">{{ k.qr }}</div>
+<div style="font:700 12px/1.4 Nunito,sans-serif;margin-top:12px">Aponte a câmera do celular</div>
+</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+<span style="font:800 12px/1 Nunito,sans-serif;padding:6px 9px;border-radius:99px;background:#fff">{{ k.papelLabel }} · {{ k.mecLabel }}</span>
+<button onClick="{{ k.onCopy }}" style="margin-left:auto;border:0;background:#fff;padding:7px 11px;border-radius:99px;font:700 12px/1 Nunito,sans-serif;cursor:pointer">{{ k.copyLabel }}</button>
+<button onClick="{{ k.onPng }}" style="border:0;background:#fff;padding:7px 11px;border-radius:99px;font:700 12px/1 Nunito,sans-serif;cursor:pointer">PNG</button>
+<button onClick="{{ k.onOpen }}" style="border:0;background:#fff;padding:7px 11px;border-radius:99px;font:700 12px/1 Nunito,sans-serif;cursor:pointer">Abrir ↗</button>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const PAPEIS={'vovo-a':{t:'Vovó',cor:'oklch(0.88 0.06 10)'},'vovo-o':{t:'Vovô',cor:'oklch(0.88 0.06 230)'},'titia':{t:'Titia',cor:'oklch(0.91 0.06 85)'},'titio':{t:'Titio',cor:'oklch(0.88 0.06 160)'}};
+const MECS={segurar:{label:'Segurar o presente',dica:'Segura o dedo no presente até ele abrir'},laco:{label:'Arrastar o laço',dica:'Desliza o laço para o lado até desatar'},tampa:{label:'Puxar a tampa',dica:'Arrasta a tampa do presente para cima'},envelope:{label:'Selo de cera',dica:'Toca 5 vezes no lacre até ele quebrar'},raspar:{label:'Raspadinha',dica:'Raspa o cartão com o dedo'}};
+const KEY='surpresa.estado';
+const defBase=()=>{try{return new URL('Surpresa.dc.html',location.href).href;}catch(e){return 'https://exemplo.com/';}};
+const uid=()=>(crypto.randomUUID?crypto.randomUUID():String(Math.random()).slice(2));
+function montarLink(base,{papel,nome,mecanica}){
+  const u=new URL(base);u.search='';u.hash='';
+  u.searchParams.set('p',papel);
+  if(nome&&nome.trim())u.searchParams.set('n',nome.trim().slice(0,24));
+  u.searchParams.set('m',mecanica);
+  return u.toString();
+}
+function qrObj(txt){const q=window.qrcode(0,'M');q.addData(txt,'Byte');q.make();return q;}
+function qrSvg(txt){return qrObj(txt).createSvgTag({cellSize:4,margin:0,scalable:true}).replace('<svg ','<svg style="width:100%;height:100%;display:block" ');}
+function qrPng(txt,px=1024){const q=qrObj(txt),n=q.getModuleCount(),m=4,cell=px/(n+m*2);
+  const c=document.createElement('canvas');c.width=c.height=px;const x=c.getContext('2d');
+  x.fillStyle='#fff';x.fillRect(0,0,px,px);x.fillStyle='#000';
+  for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))x.fillRect((k+m)*cell,(r+m)*cell,Math.ceil(cell),Math.ceil(cell));
+  return c.toDataURL('image/png');}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const PRINT_CSS='@page{size:A4;margin:10mm}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}body{margin:0;font-family:Nunito,sans-serif;color:#3a3550}.g{display:grid;grid-template-columns:repeat(2,80mm);gap:8mm;justify-content:center}.c{width:80mm;height:115mm;border-radius:6mm;padding:8mm 7mm 6mm;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;break-inside:avoid;outline:.2mm dashed #bbb;outline-offset:2mm}.s{position:absolute;top:5mm;right:6mm;width:4mm;height:4mm;background:#fffdf8;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}.to{display:flex;gap:2mm;width:100%;align-items:flex-end;font-size:11pt}.to div{flex:1;text-align:left;border-bottom:.5mm dotted #8a85a0;font:600 13pt Fredoka,sans-serif;min-height:5mm}.h{font:600 17pt/1.12 Fredoka,sans-serif;margin-top:6mm}.q{margin-top:auto;width:45mm;height:45mm;background:#fff;border-radius:4mm;padding:3mm}.q svg{width:100%;height:100%;display:block}.f{font-size:9pt;margin-top:4mm}';
+class Component extends DCLogic {
+  constructor(p){super(p);let s=null;try{s=JSON.parse(localStorage.getItem(KEY));}catch(e){}
+    this.state=Object.assign({base:defBase(),mecanica:'laco',porPessoa:false,
+      pessoas:['vovo-a','vovo-o','titia','titio'].map(pp=>({id:uid(),nome:'',papel:pp,mecanica:null}))},s||{},{copied:null,qrReady:!!window.qrcode});}
+  componentDidMount(){if(window.qrcode)return;const w=()=>{if(window.qrcode)this.setState({qrReady:true});else this.qt=setTimeout(w,150);};w();}
+  componentWillUnmount(){clearTimeout(this.qt);clearTimeout(this.ct);}
+  save(patch){this.setState(patch,()=>{const {base,mecanica,porPessoa,pessoas}=this.state;try{localStorage.setItem(KEY,JSON.stringify({base,mecanica,porPessoa,pessoas}));}catch(e){}});}
+  upd(id,patch){this.save({pessoas:this.state.pessoas.map(p=>p.id===id?Object.assign({},p,patch):p)});}
+  baseOk(){try{return new URL(this.state.base).protocol==='https:';}catch(e){return false;}}
+  mecDe(p){return this.state.porPessoa&&p.mecanica?p.mecanica:this.state.mecanica;}
+  link(p){return montarLink(this.state.base,{papel:p.papel,nome:p.nome,mecanica:this.mecDe(p)});}
+  copy(p){const t=this.link(p);const done=()=>{this.setState({copied:p.id});clearTimeout(this.ct);this.ct=setTimeout(()=>this.setState({copied:null}),1500);};
+    if(navigator.clipboard)navigator.clipboard.writeText(t).then(done,()=>prompt('Copie o link:',t));else prompt('Copie o link:',t);}
+  png(p){const a=document.createElement('a');a.href=qrPng(this.link(p));a.download=`qr-${(p.nome||PAPEIS[p.papel].t).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\W+/g,'-').toLowerCase()}.png`;document.body.appendChild(a);a.click();a.remove();}
+  printAll=()=>{
+    const cards=this.state.pessoas.map(p=>`<div class="c" style="background:${PAPEIS[p.papel].cor}"><div class="s"></div><div class="to"><span>Para:</span><div>${esc(p.nome)}</div></div><div class="h">Tem uma surpresa lacrada para você</div><div class="q">${qrSvg(this.link(p))}</div><div class="f">Aponte a câmera do celular</div></div>`).join('');
+    const w=window.open('','_blank');if(!w){alert('Permita pop-ups para imprimir os cartões.');return;}
+    const d=w.document;d.open();d.write('<!doctype html><html><head><meta charset="utf-8"><title>Cartões</title><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Nunito:wght@700&display=swap" rel="stylesheet"><style>'+PRINT_CSS+'</style></head><body><div class="g">'+cards+'</div></body></html>');d.close();
+    const go=()=>setTimeout(()=>w.print(),300);
+    if(d.fonts&&d.fonts.ready)d.fonts.ready.then(go);else go();};
+  renderVals(){
+    const s=this.state,ok=this.baseOk(),ready=s.qrReady&&ok;
+    const seen={};let dup=false;s.pessoas.forEach(p=>{const n=p.nome.trim().toLowerCase();if(!n)return;const k=n+'|'+p.papel;if(seen[k])dup=true;seen[k]=1;});
+    return {
+      base:s.base,onBase:e=>this.save({base:e.target.value.trim()}),resetBase:()=>this.save({base:defBase()}),
+      baseBad:!ok,baseBorder:ok?'oklch(0.9 0.01 280)':'oklch(0.7 0.14 25)',
+      mecs:Object.entries(MECS).map(([k,m])=>({label:m.label,dica:m.dica,dot:s.mecanica===k?1:0,
+        bg:s.mecanica===k?'#fff':'oklch(0.95 0.015 85)',border:s.mecanica===k?'oklch(0.32 0.04 280)':'transparent',
+        onPick:()=>this.save({mecanica:k}),
+        onTest:e=>{e.stopPropagation();window.open(montarLink(ok?s.base:defBase(),{papel:'vovo-a',nome:'',mecanica:k}),'_blank');}})),
+      porPessoa:s.porPessoa,togglePor:e=>this.save({porPessoa:e.target.checked}),
+      pessoas:s.pessoas.map(p=>({papelOpts:Object.entries(PAPEIS).map(([v,o])=>({v,label:o.t,sel:p.papel===v})),mecOpts:[['segurar','Segurar'],['laco','Laço'],['tampa','Tampa'],['envelope','Envelope'],['raspar','Raspadinha']].map(([v,label])=>({v,label,sel:this.mecDe(p)===v})),nome:p.nome,papel:p.papel,mecanica:this.mecDe(p),cor:PAPEIS[p.papel].cor,showMec:s.porPessoa,
+        onNome:e=>this.upd(p.id,{nome:e.target.value.slice(0,24)}),onPapel:e=>this.upd(p.id,{papel:e.target.value}),
+        onMec:e=>this.upd(p.id,{mecanica:e.target.value}),onRemove:()=>this.save({pessoas:s.pessoas.filter(x=>x.id!==p.id)})})),
+      add:()=>this.save({pessoas:s.pessoas.concat({id:uid(),nome:'',papel:'titia',mecanica:null})}),
+      dupWarn:dup,empty:!s.pessoas.length,
+      actOp:ready&&s.pessoas.length?1:0.4,actPe:ready&&s.pessoas.length?'auto':'none',printAll:this.printAll,
+      cards:s.pessoas.map(p=>({nome:p.nome,bg:PAPEIS[p.papel].cor,papelLabel:PAPEIS[p.papel].t,mecLabel:MECS[this.mecDe(p)].label,
+        qr:ready?React.createElement('div',{style:{width:'100%',height:'100%'},dangerouslySetInnerHTML:{__html:qrSvg(this.link(p))}}):null,
+        copyLabel:s.copied===p.id?'Copiado!':'Copiar link',
+        onCopy:()=>ok&&this.copy(p),onPng:()=>ready&&this.png(p),onOpen:()=>ok&&window.open(this.link(p),'_blank')}))
+    };
+  }
+}
+</script>
+</body>
+</html>
