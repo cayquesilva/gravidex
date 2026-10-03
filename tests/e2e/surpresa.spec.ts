@@ -112,7 +112,11 @@ test('teclado: Enter/Espaço avançam cada gesto e viram a cartinha', async ({ p
   for (const [m, sel, vezes] of [['laco', '.laco-botao', 4], ['tampa', '.tampa', 3], ['envelope', '.selo', 5], ['raspar', '.raspa-canvas', 4]] as const) {
     await page.goto(`./?p=vovo-o&m=${m}&k=${Date.now()}`);
     await page.locator(sel).focus();
-    for (let i = 0; i < vezes; i++) await page.keyboard.press(i % 2 ? 'Space' : 'Enter');
+    // tecla até abrir (a raspadinha pode abrir antes, conforme a altura do cartão); para quando o foco sai do gesto
+    for (let i = 0; i < vezes; i++) {
+      if (!(await page.locator(sel).evaluate((el) => el === document.activeElement))) break;
+      await page.keyboard.press(i % 2 ? 'Space' : 'Enter');
+    }
     // o foco vai para a cartinha, que vira com Enter
     await expect(page.locator('.cartinha'), m).toBeFocused();
     await page.keyboard.press('Enter');
@@ -201,4 +205,18 @@ test('parâmetros inválidos caem no padrão (vovó + laço)', async ({ page }) 
   await expect(page.locator('.frente .msg-titulo')).toHaveText('Vovó');
   await expect(page.locator('.frente .msg-parabens')).toHaveText('Parabéns, <img src=x>!');
   await expect(page.locator(':is(.frente-saudacao, .msg-parabens) img')).toHaveCount(0);
+});
+
+test('primo e prima: saudação e promoção com o gênero certo', async ({ page }) => {
+  for (const [p, nome, querido, verbo, titulo] of [
+    ['primo', 'Caio', 'Querido', 'promovido', 'Primo'],
+    ['prima', 'Lia', 'Querida', 'promovida', 'Prima'],
+  ] as const) {
+    await page.goto(`./?p=${p}&n=${nome}&m=laco`);
+    await GESTOS.laco(page);
+    await expect(page.locator('.frente .frente-saudacao')).toHaveText(`${querido} ${nome},`);
+    await virar(page);
+    await expect(page.locator('.verso .painel.ativo .msg-pre')).toHaveText(`Você foi ${verbo} a`);
+    await expect(page.locator('.verso .painel.ativo .msg-titulo')).toHaveText(titulo);
+  }
 });

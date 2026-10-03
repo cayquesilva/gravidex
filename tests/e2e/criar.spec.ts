@@ -20,7 +20,7 @@ test('4 pessoas → 4 QR distintos, estado sobrevive ao reload, impressão 2×2'
 
   // nada no cartão revela papel nem bebê
   for (const txt of await page.locator('.cartao').allTextContents()) {
-    expect(txt).not.toMatch(/Vov[óô]|Titi[ao]|beb[êe]/i);
+    expect(txt).not.toMatch(/Vov[óô]|Titi[ao]|Prim[ao]|beb[êe]/i);
   }
 
   await page.locator('.mec[data-mec="envelope"]').click();

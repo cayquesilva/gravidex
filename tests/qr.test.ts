@@ -43,8 +43,8 @@ describe('qrSvg', () => {
 
   it('pessoas diferentes geram QR diferentes', () => {
     const base = 'https://surpresa.netlify.app/';
-    const svgs = (['vovo-a', 'vovo-o', 'titia', 'titio'] as const)
+    const svgs = (['vovo-a', 'vovo-o', 'titia', 'titio', 'prima', 'primo'] as const)
       .map((papel) => qrSvg(montarLink(base, { papel, mecanica: 'laco' })));
-    expect(new Set(svgs).size).toBe(4);
+    expect(new Set(svgs).size).toBe(6);
   });
 });

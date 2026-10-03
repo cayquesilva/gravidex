@@ -3,6 +3,8 @@ export const PAPEIS = {
   'vovo-o': { titulo: 'Vovô', verbo: 'promovido', querido: 'Querido', cartao: 'oklch(0.88 0.06 230)' },
   'titia': { titulo: 'Titia', verbo: 'promovida', querido: 'Querida', cartao: 'oklch(0.91 0.06 85)' },
   'titio': { titulo: 'Titio', verbo: 'promovido', querido: 'Querido', cartao: 'oklch(0.88 0.06 160)' },
+  'prima': { titulo: 'Prima', verbo: 'promovida', querido: 'Querida', cartao: 'oklch(0.89 0.06 50)' },
+  'primo': { titulo: 'Primo', verbo: 'promovido', querido: 'Querido', cartao: 'oklch(0.87 0.06 290)' },
 } as const;
 
 /**

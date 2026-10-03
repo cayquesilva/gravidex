@@ -13,7 +13,7 @@ describe('montarLink / lerParametros', () => {
 
   it('nunca escreve o papel por extenso', () => {
     const link = montarLink(BASE, { papel: 'vovo-a', nome: 'Maria', mecanica: 'laco' });
-    expect(decodeURIComponent(link)).not.toMatch(/Vovó|Vovô|Titia|Titio/);
+    expect(decodeURIComponent(link)).not.toMatch(/Vovó|Vovô|Titia|Titio|Prima|Primo/);
     expect(link).toBe('https://surpresa.netlify.app/?p=vovo-a&n=Maria&m=laco');
   });
 
@@ -62,11 +62,15 @@ describe('textos da cartinha', () => {
     expect(textoPromocao('vovo-o')).toBe('Você foi promovido a');
     expect(textoPromocao('titia')).toBe('Você foi promovida a');
     expect(textoPromocao('titio')).toBe('Você foi promovido a');
+    expect(textoPromocao('prima')).toBe('Você foi promovida a');
+    expect(textoPromocao('primo')).toBe('Você foi promovido a');
   });
 
   it('saudação da frente usa o gênero e some sem nome', () => {
     expect(textoSaudacao('vovo-a', 'Maria')).toBe('Querida Maria,');
     expect(textoSaudacao('titio', 'Beto')).toBe('Querido Beto,');
+    expect(textoSaudacao('primo', 'Caio')).toBe('Querido Caio,');
+    expect(textoSaudacao('prima', 'Lia')).toBe('Querida Lia,');
     expect(textoSaudacao('titia', '   ')).toBe('');
   });
 

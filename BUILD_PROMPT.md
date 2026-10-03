@@ -7,7 +7,7 @@
 
 ## 0. Contexto
 
-Um casal está grávido e quer contar para as futuras vovós, vovôs, titias e titios. Cada pessoa recebe um **cartão impresso com QR**. Ao escanear, abre uma página com um **lacre interativo** (gamificado, infantil e mágico). Ao romper o lacre, aparece só a mensagem:
+Um casal está grávido e quer contar para as futuras vovós, vovôs, titias, titios, primas e primos. Cada pessoa recebe um **cartão impresso com QR**. Ao escanear, abre uma página com um **lacre interativo** (gamificado, infantil e mágico). Ao romper o lacre, aparece só a mensagem:
 
 > **Maria, você foi promovida a**
 > # Vovó
@@ -66,7 +66,7 @@ Há duas páginas:
 
 | Param | Valores | Padrão | Regra |
 |---|---|---|---|
-| `p` | `vovo-a` `vovo-o` `titia` `titio` | `vovo-a` | valor desconhecido → padrão |
+| `p` | `vovo-a` `vovo-o` `titia` `titio` `prima` `primo` | `vovo-a` | valor desconhecido → padrão |
 | `n` | texto | vazio | `trim()`, no máximo 24 caracteres; renderizar com `textContent` (nunca innerHTML) |
 | `m` | `segurar` `laco` `tampa` `envelope` `raspar` | `laco` | valor desconhecido → padrão |
 | `t` | 1–10 | 5 | só para `envelope` |
@@ -84,6 +84,8 @@ export const PAPEIS = {
   'vovo-o': { titulo: 'Vovô',  verbo: 'promovido', cartao: 'oklch(0.88 0.06 230)' },
   'titia':  { titulo: 'Titia', verbo: 'promovida', cartao: 'oklch(0.91 0.06 85)'  },
   'titio':  { titulo: 'Titio', verbo: 'promovido', cartao: 'oklch(0.88 0.06 160)' },
+  'prima':  { titulo: 'Prima', verbo: 'promovida', cartao: 'oklch(0.89 0.06 50)'  },
+  'primo':  { titulo: 'Primo', verbo: 'promovido', cartao: 'oklch(0.87 0.06 290)' },
 } as const;
 
 export const MECANICAS = {
